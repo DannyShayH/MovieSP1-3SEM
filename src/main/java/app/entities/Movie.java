@@ -2,10 +2,7 @@ package app.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
@@ -16,28 +13,18 @@ import java.util.Set;
 @Setter
 @Getter
 @ToString
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @JsonProperty("original_title")
+    @Column(length = 10000)
     private String title;
-
-    @JsonProperty("overview")
+    @Column(length = 10000)
     private String overview;
-
-    @JsonProperty("release_date")
+    @Column(length = 10000)
     private String releaseDate;
 
-    @JsonProperty("vote_average")
     private double rating;
-
-    private Set<Genre> genre;
-
-    private Set<Director> director;
-
-    private Set<Actor> actor;
 }

@@ -3,6 +3,8 @@ package app;
 
 import app.config.HibernateConfig;
 import app.dao.MovieDAO;
+import app.services.EntityManagerFactoryService;
+import app.services.MovieFactory;
 import app.services.MovieService;
 import app.utils.ApiFetcher;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,13 +14,14 @@ import jakarta.persistence.EntityManagerFactory;
 public class App {
     public static void initiate()
     {
-    EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-    MovieService movieService = new MovieService(emf);
-    movieService.getDanishMovies();
+//    EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+//    MovieService movieService = new MovieService(emf);
+//    movieService.getDanishMovies();
 
 
         MovieDAO movie = new  MovieDAO();
-        movie.create();
+        movie.create(MovieFactory.createMovie());
+        EntityManagerFactoryService.close();
 
     }
 }

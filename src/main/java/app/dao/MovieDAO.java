@@ -3,6 +3,7 @@ package app.dao;
 import app.dto.MovieDTO;
 import app.entities.Movie;
 import app.persistence.IDAO;
+import app.services.EntityManagerFactoryService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MovieDAO implements IDAO<Movie> {
-    private static EntityManagerFactory emf;
+    private static EntityManagerFactory emf = EntityManagerFactoryService.getEntityManagerFactory();
 
 
     @Override

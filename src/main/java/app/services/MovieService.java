@@ -2,6 +2,7 @@ package app.services;
 
 import app.dto.MovieDTO;
 import app.utils.ApiFetcher;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManagerFactory;
@@ -10,18 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieService {
-    ObjectMapper maper = ObjectMapperService.getMapper();
-    String url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=da-DK&page=*&primary_release_year=$&sort_by=popularity.desc&with_origin_country=DK&api_key=$1";
-    String apiKey = "82069456ff0f378d0ddb400bc8419f80";
-    String singleUrl = "https://api.themoviedb.org/3/search/movie?query=bastarden&include_adult=false&language=en-US&page=1";
+    static ObjectMapper objectMapper = ObjectMapperService.getMapper();
+    static String url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=da-DK&page=*&primary_release_year=$&sort_by=popularity.desc&with_origin_country=DK&api_key=$1";
+    static String apiKey = "82069456ff0f378d0ddb400bc8419f80";
+    static String singleUrl = "https://api.themoviedb.org/3/search/movie?query=bastarden&include_adult=false&language=en-US&page=1&api_key=$1";
 
     public MovieService(EntityManagerFactory emf) {
     }
 
-    public MovieDTO getMovie() {
-        JsonNode response = ApiFetcher.getApiDataWithMapper(singleUrl, new ObjectMapper());
+    public static MovieDTO getMovie() {
 
-        return null;
+        singleUrl= singleUrl.replace("$1", apiKey);
+        JsonNode response = ApiFetcher.getApiDataWithMapper(singleUrl, objectMapper);
+        try {
+            return objectMapper.treeToValue(response.get("results").get(0), MovieDTO.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     public List<MovieDTO> getDanishMovies() {
@@ -36,7 +44,7 @@ public class MovieService {
             url = url.replace("$", (years[i]));
             for (int p = 0; p <= maxPage; p++) {
                 url = url.replace("*", String.valueOf(page));
-                JsonNode response = ApiFetcher.getApiDataWithMapper(url, maper);
+                JsonNode response = ApiFetcher.getApiDataWithMapper(url, objectMapper);
                 System.out.println(response.toPrettyString());
                 maxPage = response.get("total_pages").asInt();
                 page++;

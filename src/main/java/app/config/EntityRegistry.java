@@ -1,9 +1,7 @@
 package app.config;
 
-import app.entities.Actor;
-import app.entities.Director;
-import app.entities.Genre;
-import app.entities.Movie;
+import app.dto.CrewDTO;
+import app.entities.*;
 import org.hibernate.cfg.Configuration;
 
 final class EntityRegistry {
@@ -15,5 +13,7 @@ final class EntityRegistry {
         configuration.addAnnotatedClass(Director.class);
         configuration.addAnnotatedClass(Genre.class);
         configuration.addAnnotatedClass(Movie.class);
+        configuration.addAnnotatedClass(Crew.class);
+
     }
 }

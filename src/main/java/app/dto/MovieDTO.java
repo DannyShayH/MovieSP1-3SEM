@@ -17,6 +17,9 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieDTO {
 
+    @JsonProperty("id")
+    private long id;
+
     @JsonProperty("original_title")
     private String title;
 
@@ -29,10 +32,7 @@ public class MovieDTO {
     @JsonProperty("vote_average")
     private double rating;
 
-    private Set<Genre> genre;
 
-    private Set<Director> director;
-
-    private Set<Actor> actor;
+    private ProductionDTO production;
 
 }

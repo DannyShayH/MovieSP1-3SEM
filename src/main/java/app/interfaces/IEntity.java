@@ -1,4 +1,4 @@
-package app.persistence;
+package app.interfaces;
 
 public interface IEntity {
         Long getId();

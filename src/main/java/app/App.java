@@ -1,15 +1,11 @@
 package app;
 
-
-import app.config.HibernateConfig;
 import app.dao.MovieDAO;
+import app.dto.MovieDTO;
+import app.entities.Movie;
 import app.services.EntityManagerFactoryService;
 import app.services.MovieFactory;
 import app.services.MovieService;
-import app.utils.ApiFetcher;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EntityManagerFactory;
 
 public class App {
     public static void initiate()
@@ -19,9 +15,12 @@ public class App {
 //    movieService.getDanishMovies();
 
 
-        MovieDAO movie = new  MovieDAO();
-        movie.create(MovieFactory.createMovie());
-        EntityManagerFactoryService.close();
+        Movie movie = MovieFactory.createMovie();
+
+        System.out.println(movie);
+
+        MovieDAO movieDAO = new MovieDAO();
+        movieDAO.create(movie);
 
     }
 }

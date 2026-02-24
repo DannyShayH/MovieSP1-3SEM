@@ -61,9 +61,6 @@ public class MovieDAO implements IDAO<Movie> {
 
     @Override
     public Set<Movie> getAll() {
-      //  try(EntityManager em = emf.createEntityManager()){
-        //    return new HashSet(em.createQuery("SELECT m FROM Movie m").getResultList());
-
             try (EntityManager em = emf.createEntityManager()) {
                 TypedQuery<Movie> query = em.createQuery("SELECT u FROM Movie u", Movie.class);
                 return new HashSet<>(query.getResultList());

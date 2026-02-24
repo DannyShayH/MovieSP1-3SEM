@@ -1,11 +1,26 @@
 package app.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import app.interfaces.IEntity;
+import app.interfaces.IPerson;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@Entity
 public class Director {
 
+    @Id
+    private long id;
+
+    @Column(name = "director_name")
     private String name;
+
+    @Column(name = "gender")
+    private String gender;
+
+
 }

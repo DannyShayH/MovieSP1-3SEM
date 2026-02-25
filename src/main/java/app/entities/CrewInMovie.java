@@ -21,11 +21,15 @@ public class CrewInMovie {
     @Column(name = "crew_id")
     private long crewId;
 
-    @Column(name = "crew_name")
-    private String name;
+    @Column(length = 10000)
+    private String originalName;
 
-    @Column(name = "job")
+    @Column(length = 10000)
     private String job;
+
+     @Column(length = 10000)
+     private String department;
+
 
     @ManyToOne
     @JoinColumn(name = "crew")

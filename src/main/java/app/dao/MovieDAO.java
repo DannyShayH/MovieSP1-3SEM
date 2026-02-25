@@ -65,4 +65,13 @@ public class MovieDAO implements IDAO<Movie> {
                 return new HashSet<>(query.getResultList());
         }
     }
+
+    /*
+    public List<Movie> getAllMoviesByActor(Person person){
+    try(entityManager = entityManagerFactory.createEntityManager()){
+
+    TypedQuery<Movie> query = entityManager.createQuery("SELECT m FROM Movie m JOIN m.actorinmove a join a.person p WHERE p.id = :personId", Movie.class);
+    return query.setParameter("personId", person.getId()).getResultList();
+    }
+    */
 }

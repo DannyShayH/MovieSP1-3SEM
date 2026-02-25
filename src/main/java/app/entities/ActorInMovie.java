@@ -16,16 +16,10 @@ public class ActorInMovie {
     private long id;
 
     @Column(name = "actor_id")
-    private long ActorId;
-
-    @Column(length = 10000)
-    private String name;
+    private long actorId;
 
     @Column(length = 10000)
     private String originalName;
-
-    @Column(length = 10000)
-    private int gender;
 
     @Column(length = 10000)
     private String character;
@@ -37,7 +31,6 @@ public class ActorInMovie {
     public ActorInMovie(Long actorId, String originalName, String character) {
         this.actorId = actorId;
         this.originalName = originalName;
-        this.gender = gender;
         this.character = character;
     }
 
@@ -47,3 +40,4 @@ public class ActorInMovie {
                 "Character: " + character;
     }
 }
+

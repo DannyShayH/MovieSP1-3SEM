@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -24,6 +25,7 @@ public class Movie {
     @Column(length = 10000)
     private String releaseDate;
 
+    @Column(length = 10000)
     private double rating;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -44,5 +46,16 @@ public class Movie {
                 "Rating: " + rating + "\n" +
                 "Cast" + cast + "\n" +
                 "Crew" + crewInMovie;
+    }
+
+    public void addGenre(Genre genre) {
+        if (genre != null) {
+            if (genres.contains(genre)) {
+                return;
+            }
+             genres.add(genre);
+                genre.addToMovieList(this);
+
+        }
     }
 }

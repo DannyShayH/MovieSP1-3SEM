@@ -13,6 +13,11 @@ public class ApiFetcher {
     public static JsonNode getApiDataWithMapper(String url, ObjectMapper objectMapper){
 
         try {
+            Thread.sleep(25);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             JsonNode node = objectMapper.readTree(new URI(url).toURL());
 //            System.out.println(node.toPrettyString());
             return node;

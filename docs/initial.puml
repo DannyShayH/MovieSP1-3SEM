@@ -1,0 +1,36 @@
+@startuml
+!pragma layout smetana
+
+'https://plantuml.com/class-diagram
+
+package DTO{
+class MovieDTO
+class ActorDTO
+class DirectorDTO
+class GenreDTO
+
+}
+package service{
+class ObjectMapperService
+class MovieService
+class ApiFetcher
+}
+package entities{
+class Movie
+class Actor
+enum Genre
+class Director
+}
+
+package dao{
+class MovieDAO
+class ActorDAO
+class MovieDAO
+class GenreDAO
+}
+
+package persistence {
+interface IDAO
+interface IEntity
+}
+@enduml

@@ -1,8 +1,5 @@
 package app.entities;
 
-import app.interfaces.IEntity;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,9 +27,14 @@ public class Movie {
     private double rating;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Actor> cast;
+    private List<ActorInMovie> cast;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Crew> crew;
+    private List<CrewInMovie> crewInMovie;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @Builder.Default
+//    @JoinTable()
+    private Set<Genre> genres = new HashSet<>();
+
 
     @Override
     public String toString() {
@@ -41,6 +43,6 @@ public class Movie {
                 "Release Date: " + releaseDate + "\n" +
                 "Rating: " + rating + "\n" +
                 "Cast" + cast + "\n" +
-                "Crew" + crew;
+                "Crew" + crewInMovie;
     }
 }

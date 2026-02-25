@@ -1,7 +1,5 @@
 package app.entities;
 
-import app.interfaces.IEntity;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,9 +9,7 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
-@Data
-@RequiredArgsConstructor
-public class Actor {
+public class ActorInMovie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +27,15 @@ public class Actor {
     @Column(length = 10000)
     private int gender;
 
-    @JsonProperty("character")
+    @Column(length = 10000)
     private String character;
 
-    public Actor(Long id, String name, String originalName, int gender, String character) {
-        this.id = id;
-        this.name = name;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "actor")
+    private Person person;
+
+    public ActorInMovie(Long actorId, String originalName, String character) {
+        this.actorId = actorId;
         this.originalName = originalName;
         this.gender = gender;
         this.character = character;
@@ -44,9 +43,7 @@ public class Actor {
 
     @Override
     public String toString() {
-        return "Name: " + name + "\n" +
-                "Original Name: " + originalName + "\n" +
-                "Gender: " + gender + "\n" +
+        return "Original Name: " + originalName + "\n" +
                 "Character: " + character;
     }
 }

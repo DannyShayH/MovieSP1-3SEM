@@ -1,4 +1,6 @@
-package app.persistence;
+package app.interfaces;
+
+import app.entities.Person;
 
 import java.util.Set;
 

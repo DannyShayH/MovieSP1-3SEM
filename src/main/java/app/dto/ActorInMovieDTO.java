@@ -1,17 +1,12 @@
 package app.dto;
 
-import app.interfaces.IPerson;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CrewDTO {
-
-    @JsonProperty("known_for_department")
-    private String knownForDepartment;
+@JsonIgnoreProperties (ignoreUnknown = true)
+public class ActorInMovieDTO {
 
     @JsonProperty("id")
     private long id;
@@ -25,13 +20,9 @@ public class CrewDTO {
     @JsonProperty("original_name")
     private String originalName;
 
-    @JsonProperty("department")
-    private String department;
-
-    @JsonProperty("job")
-    private String job;
-
-
+    @JsonProperty("character")
+    private String character;
 
 
 }
+

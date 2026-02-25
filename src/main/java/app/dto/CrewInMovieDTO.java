@@ -1,16 +1,16 @@
 package app.dto;
 
-import app.interfaces.IPerson;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.hibernate.tool.schema.extract.internal.InformationExtractorPostgreSQLImpl;
+
 
 @Data
-@JsonIgnoreProperties (ignoreUnknown = true)
-public class ActorDTO  {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class CrewInMovieDTO {
+
     @JsonProperty("known_for_department")
-    private String department;
+    private String knownForDepartment;
 
     @JsonProperty("id")
     private long id;
@@ -24,9 +24,13 @@ public class ActorDTO  {
     @JsonProperty("original_name")
     private String originalName;
 
-    @JsonProperty("character")
-    private String character;
+    @JsonProperty("department")
+    private String department;
+
+    @JsonProperty("job")
+    private String job;
+
+
 
 
 }
-

@@ -1,0 +1,38 @@
+@startuml
+!pragma layout smetana
+
+'https://plantuml.com/class-diagram
+
+
+
+package dto{
+class MovieDTO
+class GenreDTO
+class ActorInMovieDTO
+class CrewInMovieDTO
+class PersonDTO
+
+}
+
+package entities{
+class ActorInMovie
+class CrewInMovie
+class Genre
+class Movie
+class Person
+}
+
+ActorInMovieDTO *-- MovieDTO
+CrewInMovieDTO *-- MovieDTO
+MovieDTO --* GenreDTO
+
+
+
+ActorInMovie *-- Person
+CrewInMovie *-- Person
+Movie --*   CrewInMovie
+Movie --*  ActorInMovie
+Genre *-- Movie
+
+
+@enduml

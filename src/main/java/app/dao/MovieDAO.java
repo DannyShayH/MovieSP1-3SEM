@@ -1,8 +1,7 @@
 package app.dao;
 
-import app.dto.MovieDTO;
 import app.entities.Movie;
-import app.persistence.IDAO;
+import app.interfaces.IDAO;
 import app.services.EntityManagerFactoryService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

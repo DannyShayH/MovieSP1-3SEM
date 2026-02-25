@@ -16,11 +16,17 @@ public class App {
 
 
         Movie movie = MovieFactory.createMovie();
-
         System.out.println(movie);
 
+
+        for(Person person : PersonFactory.getAllPeopleFromAllMovies()) {
+            PersonDAO personDAO = new PersonDAO();
+            System.out.println(person);
+            personDAO.create(person);
+        }
         MovieDAO movieDAO = new MovieDAO();
         movieDAO.create(movie);
+
 
     }
 }

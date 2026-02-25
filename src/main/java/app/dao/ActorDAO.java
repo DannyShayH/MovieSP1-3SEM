@@ -1,9 +1,7 @@
 package app.dao;
 
-import app.dto.ActorDTO;
-import app.entities.Actor;
-import app.entities.Movie;
-import app.persistence.IDAO;
+import app.entities.ActorInMovie;
+import app.interfaces.IDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,57 +10,57 @@ import jakarta.persistence.TypedQuery;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ActorDAO implements IDAO<Actor> {
+public class ActorDAO implements IDAO<ActorInMovie> {
     private static EntityManagerFactory emf;
 
 
     @Override
-    public Actor create(Actor actor) {
+    public ActorInMovie create(ActorInMovie actorInMovie) {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            em.persist(actor);
+            em.persist(actorInMovie);
             em.getTransaction().commit();
-            return actor;
+            return actorInMovie;
         }
     }
 
     @Override
-    public Actor getById(long id) {
+    public ActorInMovie getById(long id) {
         try(EntityManager em = emf.createEntityManager()) {
-            Actor actor = em.find(Actor.class, id);
-            if (actor == null)
+            ActorInMovie actorInMovie = em.find(ActorInMovie.class, id);
+            if (actorInMovie == null)
                 throw new EntityNotFoundException("No entity found with id: " + id);
-            return actor;
+            return actorInMovie;
         }
     }
 
     @Override
-    public Actor update(Actor actor) {
+    public ActorInMovie update(ActorInMovie actorInMovie) {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            Actor updatedActor = em.merge(actor);
+            ActorInMovie updatedActorInMovie = em.merge(actorInMovie);
             em.getTransaction().commit();
-            return updatedActor;
+            return updatedActorInMovie;
         }
     }
 
     @Override
-    public Actor delete(long actorId) {
+    public ActorInMovie delete(long actorId) {
         try(EntityManager em = emf.createEntityManager()){
-            Actor actor = em.find(Actor.class, actorId);
-            if(actor == null)
+            ActorInMovie actorInMovie = em.find(ActorInMovie.class, actorId);
+            if(actorInMovie == null)
                 throw new EntityNotFoundException("No entity found with id: "+ actorId);
             em.getTransaction().begin();
-            em.remove(actor);
+            em.remove(actorInMovie);
             em.getTransaction().commit();
-            return actor;
+            return actorInMovie;
         }
     }
 
     @Override
-    public Set<Actor> getAll() {
+    public Set<ActorInMovie> getAll() {
         try (EntityManager em = emf.createEntityManager()) {
-            TypedQuery<Actor> query = em.createQuery("SELECT a FROM Actor a", Actor.class);
+            TypedQuery<ActorInMovie> query = em.createQuery("SELECT a FROM ActorInMovie a", ActorInMovie.class);
             return new HashSet<>(query.getResultList());
         }
     }

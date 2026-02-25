@@ -1,9 +1,7 @@
 package app.dao;
 
-import app.dto.GenreDTO;
 import app.entities.Genre;
-import app.entities.Movie;
-import app.persistence.IDAO;
+import app.interfaces.IDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;

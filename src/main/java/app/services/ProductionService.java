@@ -1,11 +1,9 @@
 package app.services;
 
-import app.dto.ActorDTO;
-import app.dto.CrewDTO;
-import app.entities.Crew;
-import app.interfaces.IEntity;
-import app.interfaces.IPerson;
-import app.entities.Actor;
+import app.dto.ActorInMovieDTO;
+import app.dto.CrewInMovieDTO;
+import app.entities.CrewInMovie;
+import app.entities.ActorInMovie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,38 +11,34 @@ import java.util.List;
 public class ProductionService {
 
 
-    public static List<Actor> actorConverter(List<ActorDTO> people) {
-        List<Actor> actors = new ArrayList<>();
-        for (ActorDTO person : people) {
-                Actor tempActor = new Actor();
-                tempActor.setActorId(person.getId());
-                tempActor.setName(person.getName());
-                tempActor.setOriginalName(person.getOriginalName());
-                tempActor.setCharacter(person.getCharacter());
-                tempActor.setGender(person.getGender());
-                actors.add(tempActor);
+    public static List<ActorInMovie> actorConverter(List<ActorInMovieDTO> people) {
+        List<ActorInMovie> actorInMovies = new ArrayList<>();
+        for (ActorInMovieDTO person : people) {
+                ActorInMovie tempActorInMovie = new ActorInMovie();
+                tempActorInMovie.setActorId(person.getId());
+                tempActorInMovie.setOriginalName(person.getOriginalName());
+                tempActorInMovie.setCharacter(person.getCharacter());
+                actorInMovies.add(tempActorInMovie);
         }
-        if (actors != null) {
-            return actors;
+        if (actorInMovies != null) {
+            return actorInMovies;
         }
         throw new RuntimeException("List of actors is null");
     }
 
-    public static List<Crew> crewConverter(List<CrewDTO> people) {
+    public static List<CrewInMovie> crewConverter(List<CrewInMovieDTO> people) {
 
-        List<Crew> crew = new ArrayList<>();;
+        List<CrewInMovie> crewInMovie = new ArrayList<>();;
 
-        for(CrewDTO crewDTO : people) {
+        for(CrewInMovieDTO crewInMovieDTO : people) {
 
-            Crew tempcrew = new Crew();
-            tempcrew.setCrewId(crewDTO.getId());
-            tempcrew.setName(crewDTO.getName());
-            tempcrew.setDepartment(crewDTO.getDepartment());
-            tempcrew.setJob(crewDTO.getJob());
-            tempcrew.setGender(crewDTO.getGender());
-            crew.add(tempcrew);
+            CrewInMovie tempcrew = new CrewInMovie();
+            tempcrew.setCrewId(crewInMovieDTO.getId());
+            tempcrew.setDepartment(crewInMovieDTO.getDepartment());
+            tempcrew.setJob(crewInMovieDTO.getJob());
+            crewInMovie.add(tempcrew);
         }
-        return crew;
+        return crewInMovie;
     }
 
 

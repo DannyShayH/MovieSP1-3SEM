@@ -1,0 +1,62 @@
+@startuml
+!pragma layout smetana
+
+'https://plantuml.com/class-diagram
+
+
+package utils {
+class ApiFetcher
+class Utils
+}
+
+package dao{
+class ActorDAO
+class CrewDAO
+class DirectorDAO
+class GenreDAO
+class MovieDAO
+}
+
+package dto{
+class MovieDTO
+class ActorDTO
+class DirectorDTO
+class GenreDTO
+class ActorInMovieDTO
+class CrewInMovieDTO
+
+}
+
+package entities{
+class ActorInMovie
+class CrewInMovie
+class Director
+class Genre
+class Movie
+}
+package exceptions{
+exception ApiException
+}
+
+package interfaces {
+interface IEntity
+interface IPerson
+interface IDAO
+}
+
+package services{
+class ObjectMapperService
+class MovieService
+class ApiFetcher
+}
+
+package config{
+class EntityRegistry
+class HibernateBaseProperties
+class HibernateConfig
+class HibernateEmfBuilder
+}
+
+class App
+class Main
+@enduml

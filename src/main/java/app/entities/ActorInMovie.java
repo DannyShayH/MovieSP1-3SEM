@@ -8,6 +8,9 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@Data
+@RequiredArgsConstructor
+@Table(name = "actor")
 @Entity
 public class ActorInMovie {
 

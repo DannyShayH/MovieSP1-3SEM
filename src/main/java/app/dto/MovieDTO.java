@@ -27,6 +27,8 @@ public class MovieDTO {
     @JsonProperty("vote_average")
     private double rating;
 
+    @JsonProperty("genre_ids")
+    private long[] genres;
 
     private ProductionDTO production;
 

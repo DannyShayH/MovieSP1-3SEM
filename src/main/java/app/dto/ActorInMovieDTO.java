@@ -11,18 +11,11 @@ public class ActorInMovieDTO {
     @JsonProperty("id")
     private long id;
 
-    @JsonProperty("gender")
-    private int gender;
-
-    @JsonProperty("name")
-    private String name;
-
     @JsonProperty("original_name")
     private String originalName;
 
     @JsonProperty("character")
     private String character;
-
 
 }
 

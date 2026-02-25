@@ -1,12 +1,17 @@
 package app.entities;
 
-import app.interfaces.IEntity;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
+import java.util.HashSet;
+import java.util.Set;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 @Entity
 public class Genre  {
 
@@ -14,5 +19,22 @@ public class Genre  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name ="genre_id")
+    private long genreId;
 
+    @Column(name="name")
+    private String name;
+
+    @ManyToMany(mappedBy = "genres")
+    private Set<Movie> movie =new HashSet<>();
+
+    public Genre(long genreId, String name) {
+        this.genreId = genreId;
+        this.name = name;
+    }
+
+    public void addToMovieList(Movie movie) {
+
+        this.movie.add(movie);
+    }
 }

@@ -1,11 +1,12 @@
 package app;
 
 import app.dao.MovieDAO;
-import app.dto.MovieDTO;
+import app.dao.PersonDAO;
 import app.entities.Movie;
-import app.services.EntityManagerFactoryService;
+import app.entities.Person;
 import app.services.MovieFactory;
-import app.services.MovieService;
+import app.services.PersonFactory;
+
 
 public class App {
     public static void initiate()

@@ -9,17 +9,9 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CrewInMovieDTO {
 
-    @JsonProperty("known_for_department")
-    private String knownForDepartment;
 
     @JsonProperty("id")
     private long id;
-
-    @JsonProperty("gender")
-    private int gender;
-
-    @JsonProperty("name")
-    private String name;
 
     @JsonProperty("original_name")
     private String originalName;
@@ -29,8 +21,5 @@ public class CrewInMovieDTO {
 
     @JsonProperty("job")
     private String job;
-
-
-
 
 }

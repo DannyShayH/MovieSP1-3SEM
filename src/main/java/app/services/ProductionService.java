@@ -2,8 +2,8 @@ package app.services;
 
 import app.dto.ActorInMovieDTO;
 import app.dto.CrewInMovieDTO;
-import app.entities.CrewInMovie;
-import app.entities.ActorInMovie;
+import app.entities.Crew;
+import app.entities.Actor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,34 +11,32 @@ import java.util.List;
 public class ProductionService {
 
 
-    public static List<ActorInMovie> actorConverter(List<ActorInMovieDTO> people) {
-        List<ActorInMovie> actorInMovies = new ArrayList<>();
+    public static List<Actor> actorConverter(List<ActorInMovieDTO> people) {
+        List<Actor> actors = new ArrayList<>();
         for (ActorInMovieDTO person : people) {
-                ActorInMovie tempActorInMovie = new ActorInMovie();
-                tempActorInMovie.setActorId(person.getId());
-                tempActorInMovie.setOriginalName(person.getOriginalName());
-                tempActorInMovie.setCharacter(person.getCharacter());
-                actorInMovies.add(tempActorInMovie);
+                Actor tempActor = new Actor();
+                tempActor.setActorId(person.getId());
+                actors.add(tempActor);
         }
-        if (actorInMovies != null) {
-            return actorInMovies;
+        if (actors != null) {
+            return actors;
         }
         throw new RuntimeException("List of actors is null");
     }
 
-    public static List<CrewInMovie> crewConverter(List<CrewInMovieDTO> people) {
+    public static List<Crew> crewConverter(List<CrewInMovieDTO> people) {
 
-        List<CrewInMovie> crewInMovie = new ArrayList<>();;
+        List<Crew> crew = new ArrayList<>();;
 
         for(CrewInMovieDTO crewInMovieDTO : people) {
 
-            CrewInMovie tempcrew = new CrewInMovie();
+            Crew tempcrew = new Crew();
             tempcrew.setCrewId(crewInMovieDTO.getId());
-            tempcrew.setDepartment(crewInMovieDTO.getDepartment());
-            tempcrew.setJob(crewInMovieDTO.getJob());
-            crewInMovie.add(tempcrew);
+//            tempcrew.setDepartment(crewInMovieDTO.getDepartment());
+//            tempcrew.setJob(crewInMovieDTO.getJob());
+            crew.add(tempcrew);
         }
-        return crewInMovie;
+        return crew;
     }
 
 

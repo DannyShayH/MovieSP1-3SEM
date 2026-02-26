@@ -1,8 +1,6 @@
 package app.dao;
 
-import app.entities.Movie;
-import app.entities.Person;
-import app.interfaces.IDAO;
+import app.entities.PersonalInformation;
 import app.services.EntityManagerFactoryService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -12,7 +10,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PersonDAO implements IDAO<Person> {
+public class PersonDAO implements IDAO<PersonalInformation> {
     private EntityManagerFactory emf;
     private EntityManager em;
 
@@ -21,13 +19,13 @@ public class PersonDAO implements IDAO<Person> {
     }
 
     @Override
-    public Person create(Person person) {
+    public PersonalInformation create(PersonalInformation personalInformation) {
         em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(person);
+            em.persist(personalInformation);
             em.getTransaction().commit();
-            return person;
+            return personalInformation;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -39,20 +37,20 @@ public class PersonDAO implements IDAO<Person> {
     }
 
     @Override
-    public Person getById(long id) {
+    public PersonalInformation getById(long id) {
         em = emf.createEntityManager();
         try {
-            return em.find(Person.class, id);
+            return em.find(PersonalInformation.class, id);
         } finally {
             em.close();
         }
     }
 
     @Override
-    public Set<Person> getAll() {
+    public Set<PersonalInformation> getAll() {
         em = emf.createEntityManager();
         try {
-            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+            TypedQuery<PersonalInformation> query = em.createQuery("SELECT p FROM PersonalInformation p", PersonalInformation.class);
             return new HashSet<>(query.getResultList());
         } finally {
             em.close();
@@ -60,11 +58,11 @@ public class PersonDAO implements IDAO<Person> {
     }
 
     @Override
-    public Person update(Person person) {
+    public PersonalInformation update(PersonalInformation personalInformation) {
         em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            Person updated = em.merge(person);
+            PersonalInformation updated = em.merge(personalInformation);
             em.getTransaction().commit();
             return updated;
         } catch (Exception e) {
@@ -78,15 +76,15 @@ public class PersonDAO implements IDAO<Person> {
     }
 
     @Override
-    public Person delete(long personId) {
+    public PersonalInformation delete(long personId) {
         try (EntityManager em = emf.createEntityManager()) {
-            Person person = em.find(Person.class, personId);
-            if (person == null)
+            PersonalInformation personalInformation = em.find(PersonalInformation.class, personId);
+            if (personalInformation == null)
                 throw new EntityNotFoundException("No entity found with id: " + personId);
             em.getTransaction().begin();
-            em.remove(person);
+            em.remove(personalInformation);
             em.getTransaction().commit();
-            return person;
+            return personalInformation;
         }
     }
 

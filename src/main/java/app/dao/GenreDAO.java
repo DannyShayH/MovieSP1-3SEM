@@ -1,7 +1,6 @@
 package app.dao;
 
 import app.entities.Genre;
-import app.interfaces.IDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;

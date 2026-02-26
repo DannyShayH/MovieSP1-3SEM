@@ -35,7 +35,7 @@ public class MovieFactory {
         List<ActorInMovieDTO> cast = totalCast.getCast();
         List<CrewInMovieDTO> crew = totalCast.getCrew();
         movie.setCast(ProductionService.actorConverter(cast));
-        movie.setCrewInMovie(ProductionService.crewConverter(crew));
+        movie.setCrew(ProductionService.crewConverter(crew));
 
         return movie;
     }

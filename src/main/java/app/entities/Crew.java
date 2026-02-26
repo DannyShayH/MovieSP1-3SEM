@@ -9,10 +9,7 @@ import lombok.*;
 @Getter
 @ToString
 @Entity
-@Builder
-@Table(name = "crew", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
-
-public class CrewInMovie {
+public class Crew {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +27,7 @@ public class CrewInMovie {
      @Column(length = 10000)
      private String department;
 
-
-    @ManyToOne
-    @JoinColumn(name = "crew")
-    private Person person;
+    @OneToOne(mappedBy = "crew", cascade = CascadeType.ALL)
+    private PersonalInformation personalInformation;
 
 }

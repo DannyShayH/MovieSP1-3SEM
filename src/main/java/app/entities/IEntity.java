@@ -1,4 +1,4 @@
-package app.interfaces;
+package app.entities;
 
 public interface IEntity {
         Long getId();

@@ -1,6 +1,4 @@
-package app.interfaces;
-
-import app.entities.Person;
+package app.dao;
 
 import java.util.Set;
 

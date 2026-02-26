@@ -1,7 +1,6 @@
 package app.dao;
 
-import app.entities.CrewInMovie;
-import app.interfaces.IDAO;
+import app.entities.Crew;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,57 +10,57 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class CrewDAO implements IDAO<CrewInMovie> {
+public class CrewDAO implements IDAO<Crew> {
     private static EntityManagerFactory emf;
 
 
     @Override
-    public CrewInMovie create(CrewInMovie crewInMovie) {
+    public Crew create(Crew crew) {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            em.persist(crewInMovie);
+            em.persist(crew);
             em.getTransaction().commit();
-            return crewInMovie;
+            return crew;
         }
     }
 
     @Override
-    public CrewInMovie getById(long id) {
+    public Crew getById(long id) {
         try(EntityManager em = emf.createEntityManager()) {
-            CrewInMovie crewInMovie = em.find(CrewInMovie.class, id);
-            if (crewInMovie == null)
+            Crew crew = em.find(Crew.class, id);
+            if (crew == null)
                 throw new EntityNotFoundException("No entity found with id: " + id);
-            return crewInMovie;
+            return crew;
         }
     }
 
     @Override
-    public CrewInMovie update(CrewInMovie crewInMovie) {
+    public Crew update(Crew crew) {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            CrewInMovie updatedCrewInMovie = em.merge(crewInMovie);
+            Crew updatedCrew = em.merge(crew);
             em.getTransaction().commit();
-            return updatedCrewInMovie;
+            return updatedCrew;
         }
     }
 
     @Override
-    public CrewInMovie delete(long crewId) {
+    public Crew delete(long crewId) {
         try(EntityManager em = emf.createEntityManager()){
-            CrewInMovie crewInMovie = em.find(CrewInMovie.class, crewId);
-            if(crewInMovie == null)
+            Crew crew = em.find(Crew.class, crewId);
+            if(crew == null)
                 throw new EntityNotFoundException("No entity found with id: "+ crewId);
             em.getTransaction().begin();
-            em.remove(crewInMovie);
+            em.remove(crew);
             em.getTransaction().commit();
-            return crewInMovie;
+            return crew;
         }
     }
 
     @Override
-    public Set<CrewInMovie> getAll() {
+    public Set<Crew> getAll() {
         try (EntityManager em = emf.createEntityManager()) {
-            TypedQuery<CrewInMovie> query = em.createQuery("SELECT c FROM CrewInMovie c", CrewInMovie.class);
+            TypedQuery<Crew> query = em.createQuery("SELECT c FROM Crew c", Crew.class);
             return new HashSet<>(query.getResultList());
         }
     }

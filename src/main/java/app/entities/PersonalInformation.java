@@ -15,13 +15,14 @@ import java.util.Set;
 @Data
 @Builder
 @Entity
-public class Person {
+public class PersonalInformation {
+
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    @Column(name = "id")
+    private long id;
 
-    @Column(name ="personal_id")
+    @Column(name ="personal_id", unique = true)
     private long personId;
 
     @Column(name = "name", length = 1000)
@@ -51,8 +52,18 @@ public class Person {
     @Column(name = "popularity")
     private double popularity;
 
-    @OneToMany(mappedBy = "id")
+    @OneToOne
+    private Actor actor;
+
+    @OneToOne
+    private Crew crew;
+
+
+    /*
+    @OneToMany(mappedBy = "person", cascade = CascadeType.MERGE)
     private Set<ActorInMovie> actorInMovie;
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.MERGE)
     private Set<CrewInMovie> crewInMovie;
+    */
+
 }

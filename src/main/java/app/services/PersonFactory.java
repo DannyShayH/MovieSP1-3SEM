@@ -1,7 +1,8 @@
 package app.services;
 
+import app.dao.PersonDAO;
 import app.dto.*;
-import app.entities.Person;
+import app.entities.PersonalInformation;
 import app.dto.ProductionDTO;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,29 +21,38 @@ public class PersonFactory {
                 TotalCastID.add(String.valueOf(id));
             }
         }
-    public static Set<Person> getAllPeopleFromAllMovies(){
-        Set<Person> people = new HashSet<>();
+    public static Set<PersonalInformation> getAllPeopleFromAllMovies(){
+        Set<PersonalInformation> people = new HashSet<>();
         int x =0;
         for (String id : TotalCastID){
-            Person person = new Person();
+            PersonalInformation personalInformation = new PersonalInformation();
             System.out.println(x);
             PersonDTO personDTO = PersonService.getPerson(id);
-            person.setPersonId(personDTO.getId());
-            person.setName(personDTO.getName());
-            person.setKnownAs(personDTO.getAlsKnownAs());
-            person.setBirthday(personDTO.getBirthday());
-            person.setDeathday(personDTO.getDeathday());
-            person.setBiography(personDTO.getBiography());
-            person.setPopularity(personDTO.getPopularity());
-            person.setGender(personDTO.getGender());
-            person.setBirthPlace(personDTO.getPlaceOfBirth());
-            person.setKnownForDepartment(personDTO.getDepartment());
+            personalInformation.setPersonId(personDTO.getId());
+            personalInformation.setName(personDTO.getName());
+            personalInformation.setKnownAs(personDTO.getAlsKnownAs());
+            personalInformation.setBirthday(personDTO.getBirthday());
+            personalInformation.setDeathday(personDTO.getDeathday());
+            personalInformation.setBiography(personDTO.getBiography());
+            personalInformation.setPopularity(personDTO.getPopularity());
+            personalInformation.setGender(personDTO.getGender());
+            personalInformation.setBirthPlace(personDTO.getPlaceOfBirth());
+            personalInformation.setKnownForDepartment(personDTO.getDepartment());
 
 
-
-            people.add(person);
+            people.add(personalInformation);
             x++;
         }
       return people;
     }
+
+    public static PersonalInformation getPersonById(long id){
+        PersonalInformation personalInformation;
+        PersonDAO personDAO = new PersonDAO();
+        personalInformation = personDAO.getById(id);
+        return personalInformation;
+
+
+    }
+
 }

@@ -8,11 +8,11 @@ final class EntityRegistry {
     private EntityRegistry() {}
 
     static void registerEntities(Configuration configuration) {
-        configuration.addAnnotatedClass(ActorInMovie.class);
-        configuration.addAnnotatedClass(Person.class);
+        configuration.addAnnotatedClass(Actor.class);
+        configuration.addAnnotatedClass(PersonalInformation.class);
         configuration.addAnnotatedClass(Genre.class);
         configuration.addAnnotatedClass(Movie.class);
-        configuration.addAnnotatedClass(CrewInMovie.class);
+        configuration.addAnnotatedClass(Crew.class);
 
     }
 }

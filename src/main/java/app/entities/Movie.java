@@ -29,11 +29,14 @@ public class Movie {
     private double rating;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<ActorInMovie> cast;
+    private List<Actor> cast;
+
     @OneToMany(cascade = CascadeType.ALL)
-    private List<CrewInMovie> crewInMovie;
+    private List<Crew> crew;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @Builder.Default
+
 //    @JoinTable()
     private Set<Genre> genres = new HashSet<>();
 
@@ -45,7 +48,7 @@ public class Movie {
                 "Release Date: " + releaseDate + "\n" +
                 "Rating: " + rating + "\n" +
                 "Cast" + cast + "\n" +
-                "Crew" + crewInMovie;
+                "Crew" + crew;
     }
 
     public void addGenre(Genre genre) {

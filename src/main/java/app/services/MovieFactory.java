@@ -34,8 +34,8 @@ public class MovieFactory {
         PersonFactory.addPeopleToList(totalCast);
         List<ActorInMovieDTO> cast = totalCast.getCast();
         List<CrewInMovieDTO> crew = totalCast.getCrew();
-        movie.setCast(ProductionService.actorConverter(cast));
-        movie.setCrew(ProductionService.crewConverter(crew));
+//        movie.setCast(ProductionService.actorConverter(cast));
+//        movie.setCrew(ProductionService.crewConverter(crew));
 
         return movie;
     }

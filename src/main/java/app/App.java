@@ -4,9 +4,7 @@ import app.config.HibernateConfig;
 import app.dao.ActorDAO;
 import app.dao.MovieDAO;
 import app.dao.PersonDAO;
-import app.entities.Actor;
-import app.entities.Movie;
-import app.entities.PersonalInformation;
+import app.entities.*;
 import app.services.EntityManagerFactoryService;
 import app.services.MovieFactory;
 import app.services.PersonFactory;
@@ -30,7 +28,7 @@ public class App {
             System.out.println(personalInformation);
             personDAO.create(personalInformation);
         }
-        MovieDAO movieDAO = new MovieDAO();
+        MovieDAO movieDAO = new MovieDAO(EntityManagerFactoryService.getEntityManagerFactory());
         movieDAO.create(movie);
 
 
@@ -42,16 +40,71 @@ public class App {
 
 
         ActorDAO actorDAO = new ActorDAO(EntityManagerFactoryService.getEntityManagerFactory());
+
+
         Actor actor = new Actor();
+        actor.setActorId(1L);
+
         PersonalInformation personalInformation = new PersonalInformation();
         personalInformation.setPersonId(1L);
         personalInformation.setName("test");
         personalInformation.setBiography("test");
-        actor.setActorId(1L);
         actor.setPersonalInformation(personalInformation);
+
+
+
+
+
         System.out.println(actor);
+
         Actor returnedActor = actorDAO.create(actor);
+
         System.out.println(returnedActor);
 
+        MovieActor movieActor = new MovieActor();
+
+        movieActor.setActor(actor);
+
+        System.out.println("____________________________"+ "\n");
+
+        Crew crew = new Crew();
+        PersonalInformation personalInformation1 = new PersonalInformation();
+        personalInformation1.setPersonId(2L);
+        personalInformation1.setName("crew_test");
+        personalInformation1.setBiography("crew_test");
+        crew.setPersonalInformation(personalInformation1);
+
+        System.out.println(crew);
+
+        crew.setCrewId(1L);
+        Crew returnedCrew = crewDAO.create(crew);
+        MovieCrew movieCrew = new MovieCrew();
+        movieCrew.setCrew(crew);
+
+        System.out.println(returnedCrew);
+
+        MovieDAO movieDAO = new MovieDAO(EntityManagerFactoryService.getEntityManagerFactory());
+        Movie movie1 = new Movie();
+        movie1.setTitle("test");
+        movie1.setRating(1.0);
+        movie1.setOverview("test");
+        movie1.setReleaseDate("2023-01-01");
+        movie1.setId(1L);
+
+        movie1 = movieDAO.create(movie1);
+
+
+
+        movieActor.setMovie(movie1);
+        movieDAO.createMovieAndActorRelation(movie1.getId(), returnedActor.getActorId(), "testActorAndMovieRelation");
+
+        movieCrew.setMovie(movie1);
+        movieDAO.createMovieAndCrewRelation(movie1.getId(), returnedCrew.getCrewId(), "testCrewAndMovieRelation");
+
+
+        System.out.println(movieActor);
+
+
     }
+
 }

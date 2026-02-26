@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-
 public class MovieActor {
 
     @Id

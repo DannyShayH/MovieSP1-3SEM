@@ -21,9 +21,16 @@ public class ActorDAO implements IDAO<Actor> {
     public Actor create(Actor actor) {
 
         try (EntityManager em = emf.createEntityManager()) {
+            Actor actorInDB = em.find(Actor.class, actor.getId());
+            if (actorInDB != null) {
+                System.out.println("Actor already exists with id: " + actor.getId());
+                return actor;
+            }
+
             em.getTransaction().begin();
             em.persist(actor);
             em.getTransaction().commit();
+
             return actor;
         }
     }

@@ -13,6 +13,9 @@ import java.util.Set;
 public class CrewDAO implements IDAO<Crew> {
     private static EntityManagerFactory emf;
 
+    public CrewDAO(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
 
     @Override
     public Crew create(Crew crew) {

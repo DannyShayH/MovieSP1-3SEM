@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
+@Builder
 @Entity
 public class Crew {
 
@@ -17,15 +18,6 @@ public class Crew {
 
     @Column(name = "crew_id")
     private long crewId;
-
-    @Column(length = 10000)
-    private String originalName;
-
-    @Column(length = 10000)
-    private String job;
-
-     @Column(length = 10000)
-     private String department;
 
     @OneToOne(mappedBy = "crew", cascade = CascadeType.ALL)
     private PersonalInformation personalInformation;

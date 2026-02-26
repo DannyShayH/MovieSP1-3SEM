@@ -12,7 +12,6 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
 @Entity
 public class PersonalInformation {

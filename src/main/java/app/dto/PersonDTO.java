@@ -12,7 +12,7 @@ import java.util.Set;
 public class PersonDTO {
 
     @JsonProperty("id")
-    private int id;
+    private long id;
 
     @JsonProperty("name")
     private String name;

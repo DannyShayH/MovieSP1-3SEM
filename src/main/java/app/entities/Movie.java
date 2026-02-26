@@ -31,8 +31,8 @@ public class Movie {
 //    @OneToMany(cascade = CascadeType.ALL)
 //    private List<MovieActor> cast;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Crew> crew;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<MovieCrew> crew;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @Builder.Default

@@ -5,7 +5,7 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"movie", "crew"})
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
@@ -23,4 +23,11 @@ public class MovieCrew {
 
     @Column(length = 10000)
     private String department;
+
+
+    @ManyToOne
+    private Movie movie;
+
+    @ManyToOne
+    private Crew crew;
 }

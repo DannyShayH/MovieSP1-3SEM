@@ -40,7 +40,7 @@ public class MovieDAO implements IDAO<Movie> {
 
     @Override
     public Movie getById(long id) {
-        try(EntityManager em = emf.createEntityManager()) {
+        try (EntityManager em = emf.createEntityManager()) {
             Movie movie = em.find(Movie.class, id);
             if (movie == null)
                 throw new EntityNotFoundException("No entity found with id: " + id);
@@ -60,10 +60,10 @@ public class MovieDAO implements IDAO<Movie> {
 
     @Override
     public Movie delete(long movieId) {
-        try(EntityManager em = emf.createEntityManager()){
+        try (EntityManager em = emf.createEntityManager()) {
             Movie movie = em.find(Movie.class, movieId);
-            if(movie == null)
-                throw new EntityNotFoundException("No entity found with id: "+ movieId);
+            if (movie == null)
+                throw new EntityNotFoundException("No entity found with id: " + movieId);
             em.getTransaction().begin();
             em.remove(movie);
             em.getTransaction().commit();
@@ -73,9 +73,9 @@ public class MovieDAO implements IDAO<Movie> {
 
     @Override
     public Set<Movie> getAll() {
-            try (EntityManager em = emf.createEntityManager()) {
-                TypedQuery<Movie> query = em.createQuery("SELECT u FROM Movie u", Movie.class);
-                return new HashSet<>(query.getResultList());
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Movie> query = em.createQuery("SELECT u FROM Movie u", Movie.class);
+            return new HashSet<>(query.getResultList());
         }
     }
 
@@ -133,4 +133,4 @@ public class MovieDAO implements IDAO<Movie> {
     return query.setParameter("personId", person.getId()).getResultList();
     }
     */
-}
+

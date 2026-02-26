@@ -2,6 +2,7 @@ package app;
 
 import app.config.HibernateConfig;
 import app.dao.ActorDAO;
+import app.dao.CrewDAO;
 import app.dao.MovieDAO;
 import app.dao.PersonDAO;
 import app.entities.*;
@@ -39,6 +40,7 @@ public class App {
 
 
 
+        CrewDAO crewDAO = new CrewDAO(EntityManagerFactoryService.getEntityManagerFactory());
         ActorDAO actorDAO = new ActorDAO(EntityManagerFactoryService.getEntityManagerFactory());
 
 

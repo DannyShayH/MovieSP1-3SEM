@@ -19,7 +19,6 @@ public class ActorDAO implements IDAO<Actor> {
 
     @Override
     public Actor create(Actor actor) {
-
         try (EntityManager em = emf.createEntityManager()) {
             Actor actorInDB = em.find(Actor.class, actor.getId());
             if (actorInDB != null) {

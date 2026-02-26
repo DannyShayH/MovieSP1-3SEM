@@ -20,6 +20,7 @@ public class PersonalInformation {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name ="personal_id", unique = true)
@@ -51,6 +52,7 @@ public class PersonalInformation {
 
     @Column(name = "popularity")
     private double popularity;
+
 
     @OneToOne
     private Actor actor;

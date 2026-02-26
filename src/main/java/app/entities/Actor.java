@@ -3,7 +3,6 @@ package app.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Getter
 @Setter
 @ToString

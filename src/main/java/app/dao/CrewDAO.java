@@ -20,6 +20,11 @@ public class CrewDAO implements IDAO<Crew> {
     @Override
     public Crew create(Crew crew) {
         try (EntityManager em = emf.createEntityManager()) {
+            Crew crewInDatabase = em.find(Crew.class, crew.getCrewId());
+            if (crewInDatabase != null) {
+                System.out.println("Crew already exists with id: " + crew.getCrewId());
+                return crew;
+            }
             em.getTransaction().begin();
             em.persist(crew);
             em.getTransaction().commit();

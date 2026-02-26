@@ -13,6 +13,7 @@ final class EntityRegistry {
         configuration.addAnnotatedClass(Genre.class);
         configuration.addAnnotatedClass(Movie.class);
         configuration.addAnnotatedClass(Crew.class);
-
+        configuration.addAnnotatedClass(MovieActor.class);
+        configuration.addAnnotatedClass(MovieCrew.class);
     }
 }

@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
+@ToString(exclude = "personalInformation")
 @Builder
 @Entity
 public class Crew {

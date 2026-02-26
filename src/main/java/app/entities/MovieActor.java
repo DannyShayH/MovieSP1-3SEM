@@ -21,9 +21,9 @@ public class MovieActor {
     @Column(length = 10000)
     private String character;
 
-@ManyToOne
-private Movie movie;
+    @ManyToOne
+    private Movie movie;
 
-@ManyToOne
-private Actor actor;
+    @ManyToOne
+    private Actor actor;
 }

@@ -36,8 +36,9 @@ public class MovieService {
         int page = 1;
         int maxPage = 1;
         int totalResult = 0;
-        List<String> ids = new ArrayList<>();
-        String[] years = {"2021", "2022", "2023", "2024", "2025", "2026"};
+//        List<String> ids = new ArrayList<>();
+        List<List<MovieDTO>> tempDTO = new ArrayList<>();
+        String[] years = {"2021",/* "2022", "2023", "2024", "2025", */"2026"};
         for (int i = 0; i < years.length; i++) {
             url = url.replace("$", (years[i]));
             for (int p = 0; p <= maxPage; p++) {

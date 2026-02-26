@@ -23,9 +23,36 @@ public class App {
 //    MovieService movieService = new MovieService(emf);
 //    movieService.getDanishMovies();
 
+        /* Pseudocode:
+        {
+        Create all movies
+        Get actor Ids from all movies
+        Create actor from Id
+        relate personalInformation based on id
+        get crew Ids from all movies
+        relate personalInformation based on id
+        }
+        pseudocode 2
+        {
+        Create all movies
+        get crew and actor Ids from all movies
+        create crew and actor from Id as id has begotten
+        relate personalInformation based on id
+        }
+
+        when done
+
+        relate movie to acter
+        relate movie to crew
+
+         */
 
         Movie movie = MovieFactory.createMovie();
         System.out.println(movie);
+
+//        List<Actor> actor = PersonFactory.getActorsFromMovie(movie.getProductionDTO());
+
+
 
 
         for(PersonalInformation personalInformation : PersonFactory.getAllPeopleFromAMovie()) {

@@ -17,7 +17,12 @@ import java.util.Set;
 public class Movie {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "movie_id")
+    private long movieId;
+
     @Column(length = 10000)
     private String title;
     @Column(length = 10000)

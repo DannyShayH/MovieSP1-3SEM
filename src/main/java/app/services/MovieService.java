@@ -29,6 +29,7 @@ public class MovieService {
 
 
     }
+    */
 
     public static List<MovieDTO> getDanishMovies() {
         List<MovieDTO> movies = null;

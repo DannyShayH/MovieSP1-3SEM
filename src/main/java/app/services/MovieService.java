@@ -15,11 +15,11 @@ public class MovieService {
     static ObjectMapper objectMapper = ObjectMapperService.getMapper();
     static String url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=da-DK&page=*&primary_release_year=$&sort_by=popularity.desc&with_origin_country=DK&api_key=$1";
     static String apiKey = System.getenv("API_KEY");
-    static String singleUrl = "https://api.themoviedb.org/3/search/movie?query=bastarden&include_adult=false&language=en-US&page=1&api_key=$1";
+   // static String singleUrl = "https://api.themoviedb.org/3/search/movie?query=bastarden&include_adult=false&language=en-US&page=1&api_key=$1";
     static String productionUrl = "https://api.themoviedb.org/3/movie/€1/credits?language=en-US&api_key=€2";
     public static MovieDTO getMovie() {
 
-        singleUrl= singleUrl.replace("$1", apiKey);
+    /*   singleUrl= singleUrl.replace("$1", apiKey);
         JsonNode response = ApiFetcher.getApiDataWithMapper(singleUrl, objectMapper);
         try {
             return objectMapper.treeToValue(response.get("results").get(0), MovieDTO.class);

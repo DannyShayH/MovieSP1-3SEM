@@ -4,11 +4,13 @@ import app.dao.ActorDAO;
 import app.dao.CrewDAO;
 import app.dto.MovieDTO;
 import app.dto.ProductionDTO;
+import app.dto.ActorInMovieDTO;
+import app.dto.CrewInMovieDTO;
 import app.entities.Actor;
 import app.entities.Crew;
 import app.entities.Movie;
-import app.entities.PersonalInformation;
-import app.dao.PersonalInfoDAO;
+import app.entities.MovieActor;
+import app.entities.MovieCrew;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,44 +18,10 @@ import java.util.List;
 public class MovieFactory {
 
 
-    public static Movie createMovie(){
+    public static List<Movie> createMovies(List<MovieDTO> movies) {
+        List<Movie> movieList = new ArrayList<>();
 
-
-//        for (Genre genre : GenreAPIFactory.getGenreApiService().getAllGenres()){
-//            GenreDAO genreDAO = new GenreDAO();
-//            genreDAO.create(genre);
-//        }
-        Movie movie = new Movie();
-
-        for(MovieDTO movieDTO : MovieService.getDanishMovies()) {
-            movie.setTitle(movieDTO.getTitle());
-            movie.setRating(movieDTO.getRating());
-            movie.setOverview(movieDTO.getOverview());
-            movie.setReleaseDate(movieDTO.getReleaseDate());
-            movie.setMovieId(movieDTO.getId());
-            for (long id : movieDTO.getGenres()) {
-                movie.addGenre(GenreAPIFactory.getGenreApiService().getGenreById(id));
-            }
-
-
-            ProductionDTO totalCast = MovieService.getProductionTeam(String.valueOf(movieDTO.getId()));
-            PersonFactory.addPeopleToList(totalCast);
-
-
-
-
-        }
-
-        return movie;
-    }
-    public static List<Movie> createMovies(List<MovieDTO> movies){
-     List<Movie> movieList = new ArrayList<>();
-
-//        for (Genre genre : GenreAPIFactory.getGenreApiService().getAllGenres()){
-//            GenreDAO genreDAO = new GenreDAO();
-//            genreDAO.create(genre);
-//        }
-        for(MovieDTO movieDTO : movies) {
+        for (MovieDTO movieDTO : movies) {
             Movie movie = new Movie();
 
             movie.setTitle(movieDTO.getTitle());
@@ -67,31 +35,74 @@ public class MovieFactory {
             }
 
             ProductionDTO totalCast = MovieService.getProductionTeam(String.valueOf(movieDTO.getId()));
-            PersonFactory.addPeopleToList(totalCast);
+
             ActorDAO actorDAO = new ActorDAO(EntityManagerFactoryService.getEntityManagerFactory());
+            CrewDAO crewDAO = new CrewDAO(EntityManagerFactoryService.getEntityManagerFactory());
+            List<ActorInMovieDTO> cast = totalCast.getCast();
+            List<CrewInMovieDTO> crew = totalCast.getCrew();
 
-            for (Actor actor : PersonFactory.getActorsFromMovie(totalCast)) {
+            for (ActorInMovieDTO actorDTO : cast) {
+                Actor actor = actorDAO.findByActorId(actorDTO.getId());
+                if (actor == null) {
+                    Actor newActor = new Actor();
+                    newActor.setActorId(actorDTO.getId());
+                    newActor.setPersonalInformation(
+                            PersonFactory.setAnActorsPersonalInformation(newActor)
+                    );
+                    actor = actorDAO.create(newActor);
+                }
 
-
-                actor.setPersonalInformation(PersonFactory.setAnActorsPersonalInformation(actor));
-
-                actorDAO.create(actor);
-
-//            for (PersonalInformation personalInformation : PersonFactory.getAllPeopleFromAMovie()) {
-//                if (personalInformation.getPersonId() == actor.getActorId()) {
-//                    actor.setPersonalInformation(personalInformation);
-//                }
-//            }
+                MovieActor movieActor = new MovieActor();
+                movieActor.setActor(actor);
+                movieActor.setOriginalName(actorDTO.getOriginalName());
+                movieActor.setCharacter(actorDTO.getCharacter());
+                movie.addCastMember(movieActor);
             }
-                CrewDAO crewDAO = new CrewDAO(EntityManagerFactoryService.getEntityManagerFactory());
-            for (Crew crew : PersonFactory.getCrewFromMovie(totalCast)) {
-                crew.setPersonalInformation(PersonFactory.setACrewsPersonalInformation(crew));
-                crewDAO.create(crew);
+
+            for (CrewInMovieDTO crewDTO : crew) {
+                Crew crewMember = crewDAO.findByCrewId(crewDTO.getId());
+                if (crewMember == null) {
+                    Crew newCrew = new Crew();
+                    newCrew.setCrewId(crewDTO.getId());
+                    newCrew.setPersonalInformation(
+                            PersonFactory.setACrewsPersonalInformation(newCrew)
+                    );
+                    crewMember = crewDAO.create(newCrew);
+                }
+
+                MovieCrew movieCrew = new MovieCrew();
+                movieCrew.setCrew(crewMember);
+                movieCrew.setOriginalName(crewDTO.getOriginalName());
+                movieCrew.setJob(crewDTO.getJob());
+                movieCrew.setDepartment(crewDTO.getDepartment());
+                movie.addCrewMember(movieCrew);
             }
 
-            movieList.add(movie);
+                movieList.add(movie);
+
+
         }
-
         return movieList;
     }
+
 }
+//            for (Crew crew :crews) {
+//                crew.setPersonalInformation(PersonFactory.setACrewsPersonalInformation(crew));
+//                personalInfoDAO.create(crew.getPersonalInformation());
+//            }
+//            for (Actor actor : PersonFactory.getActorsFromMovie(totalCast)) {
+//                actor.setPersonalInformation(PersonFactory.setAnActorsPersonalInformation(actor));
+//                actorDAO.create(actor);
+//
+//            }
+//            for (Crew crew :crews) {
+//
+//                crew.setPersonalInformation(PersonFactory.setACrewsPersonalInformation(crew));
+//
+//                //if (personalInfoDAO.find(crew.getPersonalId) != null) {
+//                // personalIndoDAO.update(crew.getPersonalInformation());
+//                //}else{
+////                crewDAO.create(crew);
+//                //}
+//
+//            }

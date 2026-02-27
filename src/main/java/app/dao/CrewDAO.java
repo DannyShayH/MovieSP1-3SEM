@@ -2,12 +2,11 @@ package app.dao;
 
 import app.entities.Actor;
 import app.entities.Crew;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.TypedQuery;
+import app.entities.PersonalInformation;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -19,32 +18,112 @@ public class CrewDAO implements IDAO<Crew> {
         this.emf = emf;
     }
 
+
+
     @Override
     public Crew create(Crew crew) {
+        if (crew == null) return null;
+
         try (EntityManager em = emf.createEntityManager()) {
-            if (!getCrewInformationBoolean(crew.getCrewId())) {
-                System.out.println("Crew already exists with id: " + crew.getCrewId());
-                em.close();
-                return crew;
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+
+            try {
+                long crewId = crew.getCrewId(); // use the business key on Crew
+
+                Crew existing = findByCrewId(em, crewId);
+
+                if (existing != null) {
+                    // Update existing managed entity
+                    PersonalInformation newPi = upsertPersonalInformation(em, crew.getPersonalInformation());
+                    existing.setPersonalInformation(newPi);
+
+                    if (newPi != null) {
+                        newPi.setCrew(existing); // keep both sides in sync (if PI has crew backref)
+                    }
+
+                    // copy other updatable fields from crew -> existing here
+                    // existing.setName(crew.getName());
+
+                    tx.commit();
+                    return existing;
+                } else {
+                    // Create new
+                    PersonalInformation pi = upsertPersonalInformation(em, crew.getPersonalInformation());
+                    crew.setPersonalInformation(pi);
+                    if (pi != null) pi.setCrew(crew); // sync both sides
+
+                    em.persist(crew); // cascades persist to PI if mapped that way
+                    tx.commit();
+                    return crew;
+                }
+            } catch (RuntimeException e) {
+                if (tx.isActive()) tx.rollback();
+                throw e;
             }
-            em.getTransaction().begin();
-            em.persist(crew);
-            em.getTransaction().commit();
-            return crew;
         }
     }
+//    @Override
+//    public Crew create(Crew crew) {
+//        try (EntityManager em = emf.createEntityManager()) {
+//            em.getTransaction().begin();
+//            PersonalInformation pi = crew.getPersonalInformation();
+//
+//
+//            if (getCrewInformationBoolean(pi.getCrew().getCrewId())) {
+//                crew.setPersonalInformation(pi);
+//                em.persist(crew);
+//                em.merge(pi);
+//                em.getTransaction().commit();
+//                return crew;
+//            }
+//        }
+//
+//        return crew;
+//
+//        }
 
-    private boolean getCrewInformationBoolean(long crewId) {
-        em = emf.createEntityManager();
-        try {
-            TypedQuery<Crew> query = em.createQuery("SELECT c FROM Crew c WHERE c.crewId = :id", Crew.class);
-            query.setParameter("id", crewId);
-            return query.getResultList().isEmpty();
-        } finally {
-            em.close();
-        }
+
+
+
+    private Crew findByCrewId(EntityManager em, long crewId) {
+        List<Crew> result = em.createQuery(
+                        "SELECT c FROM Crew c LEFT JOIN FETCH c.personalInformation WHERE c.crewId = :id",
+                        Crew.class
+                ).setParameter("id", crewId)
+                .setMaxResults(1)
+                .getResultList();
+
+        return result.isEmpty() ? null : result.get(0);
     }
 
+    private PersonalInformation upsertPersonalInformation(EntityManager em, PersonalInformation incoming) {
+        if (incoming == null) return null;
+        if (incoming.getPersonId() == 0) return incoming;
+
+        List<PersonalInformation> found = em.createQuery(
+                        "SELECT p FROM PersonalInformation p WHERE p.personId = :pid",
+                        PersonalInformation.class
+                ).setParameter("pid", incoming.getPersonId())
+                .setMaxResults(1)
+                .getResultList();
+
+        if (found.isEmpty()) {
+            return incoming;
+        }
+
+        PersonalInformation existing = found.get(0);
+        existing.setName(incoming.getName());
+        existing.setGender(incoming.getGender());
+        existing.setBirthday(incoming.getBirthday());
+        existing.setDeathday(incoming.getDeathday());
+        existing.setKnownForDepartment(incoming.getKnownForDepartment());
+        existing.setKnownAs(incoming.getKnownAs());
+        existing.setBiography(incoming.getBiography());
+        existing.setBirthPlace(incoming.getBirthPlace());
+        existing.setPopularity(incoming.getPopularity());
+        return existing;
+    }
     @Override
     public Crew getById(long id) {
         try(EntityManager em = emf.createEntityManager()) {

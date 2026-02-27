@@ -38,7 +38,6 @@ public class MovieService {
         int page = 1;
         int maxPage = 1;
         int totalResult = 0;
-//        List<String> ids = new ArrayList<>();
         List<List<MovieDTO>> tempDTO = new ArrayList<>();
         String[] years = {"2021",/* "2022", "2023", "2024", "2025", */"2026"};
         for (int i = 0; i < years.length; i++) {
@@ -61,7 +60,7 @@ public class MovieService {
                 System.out.println(response.toPrettyString());
                 maxPage = response.get("total_pages").asInt();
 
-//                ids.add(response.get("results").get(0).get("id").asText());
+
                 totalResult += response.get("total_results").asInt();
                 url = urlPlaceholder;
                 page++;

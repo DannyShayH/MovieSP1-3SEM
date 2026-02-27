@@ -33,11 +33,13 @@ public class Movie {
     @Column(length = 10000)
     private double rating;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<MovieActor> cast;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<MovieActor> cast = new HashSet<>();
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<MovieCrew> crew;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<MovieCrew> crew = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @Builder.Default
@@ -63,5 +65,17 @@ public class Movie {
                 genre.addToMovieList(this);
 
         }
+    }
+
+    public void addCastMember(MovieActor movieActor) {
+        if (movieActor == null) return;
+        cast.add(movieActor);
+        movieActor.setMovie(this);
+    }
+
+    public void addCrewMember(MovieCrew movieCrew) {
+        if (movieCrew == null) return;
+        crew.add(movieCrew);
+        movieCrew.setMovie(this);
     }
 }

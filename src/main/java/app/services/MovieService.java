@@ -6,9 +6,7 @@ import app.utils.ApiFetcher;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EntityManagerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

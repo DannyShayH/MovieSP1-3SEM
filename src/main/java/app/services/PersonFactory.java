@@ -19,9 +19,9 @@ public class PersonFactory {
 
 
 
-        public static List<Actor> getActorsFromMovie(ProductionDTO productionDTO){
+        public static Set<Actor> getActorsFromMovie(ProductionDTO productionDTO){
             List<ActorInMovieDTO> actorInMovieDTOS = productionDTO.getCast();
-            List<Actor> actors = new ArrayList<>();
+            Set<Actor> actors = new HashSet<>();
             Actor actor;
             for (ActorInMovieDTO actorInMovieDTO : actorInMovieDTOS){
                 actor = new Actor();

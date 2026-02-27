@@ -164,4 +164,16 @@ public class CrewDAO implements IDAO<Crew> {
             return new HashSet<>(query.getResultList());
         }
     }
+
+    public Crew findByCrewId(long crewId) {
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Crew> query = em.createQuery("SELECT c FROM Crew c WHERE c.crewId = :crewId", Crew.class);
+            query.setParameter("crewId", crewId);
+            try {
+                return query.getSingleResult();
+            } catch (NoResultException e) {
+                return null;
+            }
+        }
+    }
 }

@@ -19,7 +19,6 @@ public class PersonalInformation {
 
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -52,21 +51,19 @@ public class PersonalInformation {
 
     @Column(name = "popularity")
     private double popularity;
-
-
-//    @OneToOne(cascade ={ CascadeType.MERGE, CascadeType.PERSIST})
+/*
     @OneToOne(cascade = CascadeType.MERGE)
     private Actor actor;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Crew crew;
 
+*/
+    @OneToOne(mappedBy = "personalInformation")
+    private Actor actor;
 
-    /*
-    @OneToMany(mappedBy = "person", cascade = CascadeType.MERGE)
-    private Set<ActorInMovie> actorInMovie;
-    @OneToMany(mappedBy = "person", cascade = CascadeType.MERGE)
-    private Set<CrewInMovie> crewInMovie;
-    */
+    @OneToOne(mappedBy = "personalInformation")
+    private Crew crew;
+
 
 }

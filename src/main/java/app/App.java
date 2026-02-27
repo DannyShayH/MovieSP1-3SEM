@@ -43,8 +43,8 @@ public class App {
 
          */
 
-        Movie movie = MovieFactory.createMovie();
-        System.out.println(movie);
+     //   Movie movie = MovieFactory.createMovie();
+       // System.out.println(movie);
 
 //        List<Actor> actor = PersonFactory.getActorsFromMovie(movie.getProductionDTO());
 
@@ -53,8 +53,8 @@ public class App {
 
 
 
-        MovieDAO movieDAO = new MovieDAO(EntityManagerFactoryService.getEntityManagerFactory());
-        movieDAO.create(movie);
+      //  MovieDAO movieDAO = new MovieDAO(EntityManagerFactoryService.getEntityManagerFactory());
+        //movieDAO.create(movie);
 
 
 

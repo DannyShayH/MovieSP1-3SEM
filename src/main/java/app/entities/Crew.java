@@ -19,7 +19,25 @@ public class Crew {
     @Column(name = "crew_id", unique = true)
     private long crewId;
 
-    @OneToOne(mappedBy = "crew", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "personal_id", unique = true)
     private PersonalInformation personalInformation;
+/*
+
+
+    //@OneToOne(mappedBy = "crew", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    //private PersonalInformation personalInformation;
+*/
+
+
+
+
+
+
+
+
 
 }
+
+
+

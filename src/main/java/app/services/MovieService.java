@@ -67,8 +67,8 @@ public class MovieService {
                 page++;
 
             }
-            page = 1;
-            maxPage = 1;
+          //  page = 1;
+           // maxPage = 1;
             url = urlPlaceholderYear;
         }
         System.out.println(totalResult);

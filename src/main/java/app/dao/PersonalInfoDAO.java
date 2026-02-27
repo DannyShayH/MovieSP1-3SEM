@@ -37,6 +37,7 @@ public class PersonalInfoDAO implements IDAO<PersonalInformation> {
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
+                System.out.println("rollback");
             }
             throw new RuntimeException("Could not persist entity", e);
         } finally {

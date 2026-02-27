@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class PersonFactory {
 
-        private static Set<String> TotalCastID = new HashSet<>();
+        private static Set<String> totalCastID = new HashSet<>();
 
         public static void addPeopleToList(ProductionDTO productionDTO){
            setActorsInMovie(productionDTO);
@@ -70,7 +70,7 @@ public class PersonFactory {
     public static Set<PersonalInformation> getAllPeopleFromAMovie(){
         Set<PersonalInformation> people = new HashSet<>();
         int x =0;
-        for (String id : TotalCastID){
+        for (String id : totalCastID){
             PersonalInformation personalInformation = new PersonalInformation();
 //            System.out.println(x);
             PersonDTO personDTO = PersonService.getPerson(id);

@@ -54,7 +54,8 @@ public class PersonalInformation {
     private double popularity;
 
 
-    @OneToOne
+//    @OneToOne(cascade ={ CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne(cascade = CascadeType.MERGE)
     private Actor actor;
 
     @OneToOne

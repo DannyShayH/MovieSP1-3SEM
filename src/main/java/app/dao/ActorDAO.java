@@ -23,9 +23,9 @@ public class ActorDAO implements IDAO<Actor> {
     @Override
     public Actor create(Actor actor) {
         try (EntityManager em = emf.createEntityManager()) {
-            Actor actorInDB = em.find(Actor.class, actor.getId());
-            if (actorInDB != null) {
-                System.out.println("Actor already exists with id: " + actor.getId());
+            if (!getActorInformationBoolean(actor.getActorId())) { //if(personalInformationInDB == false personalInformationInDB != null)
+                System.out.println("creating the same entity again:");
+                em.close();
                 return actor;
             }
 

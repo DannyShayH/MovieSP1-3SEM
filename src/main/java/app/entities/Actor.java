@@ -16,10 +16,10 @@ public class Actor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "actor_id")
+    @Column(name = "actor_id", unique = true)
     private long actorId;
 
-    @OneToOne(mappedBy = "actor", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
     private PersonalInformation personalInformation;
 
 

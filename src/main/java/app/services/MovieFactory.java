@@ -5,7 +5,10 @@ import app.dao.CrewDAO;
 import app.dto.MovieDTO;
 import app.dto.ProductionDTO;
 import app.entities.Actor;
+import app.entities.Crew;
 import app.entities.Movie;
+import app.entities.PersonalInformation;
+import app.dao.PersonalInfoDAO;
 
 import java.util.ArrayList;
 import java.util.List;

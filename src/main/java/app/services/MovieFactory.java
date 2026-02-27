@@ -29,6 +29,7 @@ public class MovieFactory {
             movie.setOverview(movieDTO.getOverview());
             movie.setReleaseDate(movieDTO.getReleaseDate());
             movie.setMovieId(movieDTO.getId());
+            movie.setPopularity(movieDTO.getPopularity());
 
             for (long id : movieDTO.getGenres()) {
                 movie.addGenre(GenreAPIFactory.getGenreApiService().getGenreById(id));
@@ -86,23 +87,4 @@ public class MovieFactory {
     }
 
 }
-//            for (Crew crew :crews) {
-//                crew.setPersonalInformation(PersonFactory.setACrewsPersonalInformation(crew));
-//                personalInfoDAO.create(crew.getPersonalInformation());
-//            }
-//            for (Actor actor : PersonFactory.getActorsFromMovie(totalCast)) {
-//                actor.setPersonalInformation(PersonFactory.setAnActorsPersonalInformation(actor));
-//                actorDAO.create(actor);
 //
-//            }
-//            for (Crew crew :crews) {
-//
-//                crew.setPersonalInformation(PersonFactory.setACrewsPersonalInformation(crew));
-//
-//                //if (personalInfoDAO.find(crew.getPersonalId) != null) {
-//                // personalIndoDAO.update(crew.getPersonalInformation());
-//                //}else{
-////                crewDAO.create(crew);
-//                //}
-//
-//            }

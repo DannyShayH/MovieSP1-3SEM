@@ -33,6 +33,9 @@ public class Movie {
     @Column(length = 10000)
     private double rating;
 
+    @Column(length = 10000)
+    private double popularity;
+
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<MovieActor> cast = new HashSet<>();
@@ -51,7 +54,8 @@ public class Movie {
         return "Title: " + title + "\n +" +
                 "Overview: " + overview + "\n" +
                 "Release Date: " + releaseDate + "\n" +
-                "Rating: " + rating + "\n" ;
+                "Rating: " + rating + "\n" +
+                "Popularity: " + popularity + "\n";
 //                "Cast" + cast + "\n" +
 //                "Crew" + crew;
     }

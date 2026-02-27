@@ -2,9 +2,9 @@ package app;
 
 public class Main {
     public static void main(String[] args) {
-//        App.initiate();
+        App.initiate();
 
-        App.test();
+//        App.test();
 
 
 

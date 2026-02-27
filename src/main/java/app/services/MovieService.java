@@ -8,70 +8,68 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class MovieService {
     static ObjectMapper objectMapper = ObjectMapperService.getMapper();
-    static String url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=da-DK&page=$2&primary_release_year=$3&sort_by=popularity.desc&with_origin_country=DK&api_key=$1";
+    static String discoverUrlTemplate = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=da-DK&page=%d&primary_release_year=%s&sort_by=popularity.desc&with_origin_country=DK&api_key=%s";
     static String apiKey = System.getenv("API_KEY");
     static String productionUrl = "https://api.themoviedb.org/3/movie/€1/credits?language=en-US&api_key=€2";
 
 
     public static List<MovieDTO> getDanishMovies() {
         List<MovieDTO> movies = new ArrayList<>();
-        url = url.replace("$1", apiKey);
-        int page = 1;
-        int maxPage = 1;
-        int totalResult = 0;
-        List<List<MovieDTO>> tempDTO = new ArrayList<>();
-        String[] years = {"2021",/* "2022", "2023", "2024", "2025", */"2026"};
-        for (int i = 0; i < years.length; i++) {
-            String urlPlaceholderYear = url;
-            url = url.replace("$3", (years[i]));
-            for (int p = 0; p <= maxPage; p++) {
-                String urlPlaceholder = url;
-                url = url.replace("$2", String.valueOf(page));
-                JsonNode response = ApiFetcher.getApiDataWithMapper(url, objectMapper);
-                try {
-                    tempDTO.add(objectMapper.readValue(
-                            response.get("results").traverse(),
-                            new com.fasterxml.jackson.core.type.TypeReference<List<MovieDTO>>() {
+        String[] years = {"2021", "2022", "2023", "2024", "2025", "2026"};
+        int maxParallel = 4;
 
-                            }
-                    ));
-                } catch (Exception e) {
+        for (String year : years) {
+            JsonNode firstPage = ApiFetcher.getApiDataWithMapper(buildDiscoverUrl(year, 1), objectMapper);
+            movies.addAll(parseMovies(firstPage));
+            int totalPages = firstPage.get("total_pages").asInt();
+
+            if (totalPages <= 1) {
+                continue;
+            }
+
+            ExecutorService executor = Executors.newFixedThreadPool(maxParallel);
+            List<Future<List<MovieDTO>>> futures = new ArrayList<>();
+            for (int page = 2; page <= totalPages; page++) {
+                int currentPage = page;
+                futures.add(executor.submit(new Callable<List<MovieDTO>>() {
+                    @Override
+                    public List<MovieDTO> call() {
+                        JsonNode response = ApiFetcher.getApiDataWithMapper(
+                                buildDiscoverUrl(year, currentPage), objectMapper);
+                        return parseMovies(response);
+                    }
+                }));
+            }
+
+            for (Future<List<MovieDTO>> future : futures) {
+                try {
+                    movies.addAll(future.get());
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException(e);
+                } catch (ExecutionException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println(response.toPrettyString());
-                maxPage = response.get("total_pages").asInt();
-
-
-                totalResult += response.get("total_results").asInt();
-                url = urlPlaceholder;
-                page++;
-
             }
-          //  page = 1;
-           // maxPage = 1;
-            url = urlPlaceholderYear;
-        }
-        System.out.println(totalResult);
-
-        for(List<MovieDTO> movieDTOS : tempDTO){
-            for(MovieDTO movieDTO : movieDTOS){
-               if(!movies.contains(movieDTO)){
-                   movies.add(movieDTO);
-               }
-            }
+            executor.shutdown();
         }
 
-
-        return movies;
+        return dedupeByMovieId(movies);
     }
 
     public static ProductionDTO getProductionTeam(String movieId) {
-        ProductionDTO productionDTO = null;
-        url = productionUrl;
+        String url = productionUrl;
         url = url.replace("€1", movieId);
         url = url.replace("€2", apiKey);
         JsonNode response = ApiFetcher.getApiDataWithMapper(url, objectMapper);
@@ -80,6 +78,35 @@ public class MovieService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String buildDiscoverUrl(String year, int page) {
+        if (apiKey == null || apiKey.isBlank()) {
+            throw new RuntimeException("API_KEY environment variable is not set");
+        }
+        return String.format(discoverUrlTemplate, page, year, apiKey);
+    }
+
+    private static List<MovieDTO> parseMovies(JsonNode response) {
+        try {
+            return objectMapper.readValue(
+                    response.get("results").traverse(),
+                    new com.fasterxml.jackson.core.type.TypeReference<List<MovieDTO>>() {}
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static List<MovieDTO> dedupeByMovieId(List<MovieDTO> movies) {
+        List<MovieDTO> unique = new ArrayList<>();
+        Set<Long> seen = new HashSet<>();
+        for (MovieDTO movie : movies) {
+            if (seen.add(movie.getId())) {
+                unique.add(movie);
+            }
+        }
+        return unique;
     }
 
 }

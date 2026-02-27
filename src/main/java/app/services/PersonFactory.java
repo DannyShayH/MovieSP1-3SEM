@@ -18,35 +18,6 @@ public class PersonFactory {
 
 
 
-
-        public static Set<Actor> getActorsFromMovie(ProductionDTO productionDTO){
-            List<ActorInMovieDTO> actorInMovieDTOS = productionDTO.getCast();
-            Set<Actor> actors = new HashSet<>();
-            Actor actor;
-            for (ActorInMovieDTO actorInMovieDTO : actorInMovieDTOS){
-                actor = new Actor();
-                actor.setActorId(actorInMovieDTO.getId());
-                actors.add(actor);
-            }
-            return actors;
-        }
-
-        public static Set<Crew> getCrewFromMovie(ProductionDTO productionDTO){
-            List<CrewInMovieDTO> crewInMovieDTOS =productionDTO.getCrew();
-            Set<Crew> crews = new HashSet<>();
-            Crew crew;
-            for (CrewInMovieDTO crewInMovieDTO : crewInMovieDTOS){
-                crew = new Crew();
-                crew.setCrewId(crewInMovieDTO.getId());
-                crews.add(crew);
-
-            }
-            return crews;
-        }
-
-
-
-
     public static PersonalInformation setAnActorsPersonalInformation(Actor actor){
      PersonalInformation personalInformation = new PersonalInformation();
 
@@ -88,13 +59,5 @@ public class PersonFactory {
       return personalInformation;
     }
 
-    public static PersonalInformation getPersonById(long id){
-        PersonalInformation personalInformation;
-        PersonalInfoDAO personalInfoDAO = new PersonalInfoDAO();
-        personalInformation = personalInfoDAO.getById(id);
-        return personalInformation;
-
-
-    }
 
 }

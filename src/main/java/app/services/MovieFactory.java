@@ -1,9 +1,7 @@
 package app.services;
 
 import app.dao.ActorDAO;
-import app.dao.PersonDAO;
-import app.dto.ActorInMovieDTO;
-import app.dto.CrewInMovieDTO;
+import app.dao.CrewDAO;
 import app.dto.MovieDTO;
 import app.dto.ProductionDTO;
 import app.entities.Actor;
@@ -38,10 +36,8 @@ public class MovieFactory {
             ProductionDTO totalCast = MovieService.getProductionTeam(String.valueOf(movieDTO.getId()));
             PersonFactory.addPeopleToList(totalCast);
 
-            ActorDAO personDAO = new ActorDAO(EntityManagerFactoryService.getEntityManagerFactory());
-            for (Actor actor : PersonFactory.getActorsFromMovie(totalCast)) {
-                personDAO.create(actor);
-            }
+
+
 
         }
 
@@ -67,9 +63,29 @@ public class MovieFactory {
             }
             ProductionDTO totalCast = MovieService.getProductionTeam(String.valueOf(movieDTO.getId()));
             PersonFactory.addPeopleToList(totalCast);
+            ActorDAO actorDAO = new ActorDAO(EntityManagerFactoryService.getEntityManagerFactory());
+
+            for (Actor actor : PersonFactory.getActorsFromMovie(totalCast)) {
+
+
+                actor.setPersonalInformation(PersonFactory.setAnActorsPersonalInformation(actor));
+
+                actorDAO.create(actor);
+
+//            for (PersonalInformation personalInformation : PersonFactory.getAllPeopleFromAMovie()) {
+//                if (personalInformation.getPersonId() == actor.getActorId()) {
+//                    actor.setPersonalInformation(personalInformation);
+//                }
+//            }
+            }
+                CrewDAO crewDAO = new CrewDAO(EntityManagerFactoryService.getEntityManagerFactory());
+            for (Crew crew : PersonFactory.getCrewFromMovie(totalCast)) {
+                crew.setPersonalInformation(PersonFactory.setACrewsPersonalInformation(crew));
+                crewDAO.create(crew);
+            }
+
             movieList.add(movie);
         }
-
 
         return movieList;
     }

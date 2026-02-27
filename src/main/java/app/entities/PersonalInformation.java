@@ -13,8 +13,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
 @ToString(exclude = {"actor", "crew"})
+@Entity
 public class PersonalInformation {
 
 

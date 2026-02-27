@@ -1,6 +1,7 @@
 package app.dao;
 
 import app.entities.Actor;
+import app.entities.PersonalInformation;
 import app.services.EntityManagerFactoryService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -12,6 +13,8 @@ import java.util.Set;
 
 public class ActorDAO implements IDAO<Actor> {
     private static EntityManagerFactory emf;
+    private EntityManager em;
+
 
     public ActorDAO(EntityManagerFactory emf) {
         this.emf = emf;
@@ -31,6 +34,17 @@ public class ActorDAO implements IDAO<Actor> {
             em.getTransaction().commit();
 
             return actor;
+        }
+    }
+
+    private boolean getActorInformationBoolean(long actorId) {
+        em = emf.createEntityManager();
+        try {
+            TypedQuery<Actor> query = em.createQuery("SELECT p FROM Actor p WHERE p.actorId = :id", Actor.class);
+            query.setParameter("id", actorId);
+            return query.getResultList().isEmpty();
+        } finally {
+            em.close();
         }
     }
 

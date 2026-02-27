@@ -1,17 +1,13 @@
 package app;
 
-import app.dao.ActorDAO;
-import app.dao.CrewDAO;
 import app.dao.MovieDAO;
-import app.dao.PersonDAO;
+import app.dao.PersonalInfoDAO;
 import app.dto.MovieDTO;
-import app.dto.ActorInMovieDTO;
 import app.entities.*;
 import app.services.EntityManagerFactoryService;
 import app.services.MovieFactory;
 import app.services.MovieService;
 import app.services.PersonFactory;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
 
@@ -55,11 +51,7 @@ public class App {
 
 
 
-        for(PersonalInformation personalInformation : PersonFactory.getAllPeopleFromAMovie()) {
-            PersonDAO personDAO = new PersonDAO();
-            System.out.println(personalInformation);
-            personDAO.create(personalInformation);
-        }
+
 
         MovieDAO movieDAO = new MovieDAO(EntityManagerFactoryService.getEntityManagerFactory());
         movieDAO.create(movie);
@@ -72,13 +64,26 @@ public class App {
     public static void test() {
 
 
+
+
         List<MovieDTO> moviesDTO = MovieService.getDanishMovies();
         assert moviesDTO != null;
         List<Movie> movies = MovieFactory.createMovies(moviesDTO);
         for(Movie movie : movies) {
             MovieDAO movieDAO = new MovieDAO(EntityManagerFactoryService.getEntityManagerFactory());
+
+
+
+
+//        for(PersonalInformation personalInformation : PersonFactory.getAllPeopleFromAMovie()) {
+//            PersonalInfoDAO personalInfoDAO = new PersonalInfoDAO();
+//            System.out.println(personalInformation);
+//            personalInfoDAO.create(personalInformation);
+//        }
             movieDAO.create(movie);
         }
+
+
 
 
     }

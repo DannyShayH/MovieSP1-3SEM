@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class CrewDAO implements IDAO<Crew> {
     private static EntityManagerFactory emf;
+    private EntityManager em;
 
     public CrewDAO(EntityManagerFactory emf) {
         this.emf = emf;

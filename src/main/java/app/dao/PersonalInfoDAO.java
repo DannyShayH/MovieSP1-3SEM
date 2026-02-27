@@ -10,18 +10,26 @@ import jakarta.persistence.TypedQuery;
 import java.util.HashSet;
 import java.util.Set;
 
-public class PersonDAO implements IDAO<PersonalInformation> {
+public class PersonalInfoDAO implements IDAO<PersonalInformation> {
     private EntityManagerFactory emf;
     private EntityManager em;
 
-    public PersonDAO() {
+    public PersonalInfoDAO() {
         this.emf = EntityManagerFactoryService.getEntityManagerFactory();
     }
 
     @Override
     public PersonalInformation create(PersonalInformation personalInformation) {
+
         em = emf.createEntityManager();
+//        PersonalInformation personalInformationInDB = getPersonalInformation(personalInformation.getPersonId());
+        if (getPersonalInformationBoolean(personalInformation.getPersonId())) { //if(personalInformationInDB == false personalInformationInDB != null)
+            System.out.println("creating the same entity again:");
+            em.close();
+            return personalInformation;
+        }
         try {
+
             em.getTransaction().begin();
             em.persist(personalInformation);
             em.getTransaction().commit();
@@ -35,6 +43,35 @@ public class PersonDAO implements IDAO<PersonalInformation> {
             em.close();
         }
     }
+
+
+        private  boolean getPersonalInformationBoolean(long personalId) {
+            em = emf.createEntityManager();
+            try {
+                TypedQuery<PersonalInformation> query = em.createQuery("SELECT p FROM PersonalInformation p WHERE p.personId = :id", PersonalInformation.class);
+                query.setParameter("id", personalId);
+                return !query.getResultList().isEmpty();
+            } finally {
+                em.close();
+            }
+        }
+    private  PersonalInformation getPersonalInformation(long personalId) {
+        em = emf.createEntityManager();
+        try {
+
+            TypedQuery<PersonalInformation> query = em.createQuery("SELECT p FROM PersonalInformation p WHERE p.personId = :id", PersonalInformation.class);
+            query.setParameter("id", personalId);
+            return query.getSingleResult();
+            }
+        catch (Exception e) {
+            return null;
+        }
+        finally {
+            em.close();
+        }
+
+    }
+
 
     @Override
     public PersonalInformation getById(long id) {

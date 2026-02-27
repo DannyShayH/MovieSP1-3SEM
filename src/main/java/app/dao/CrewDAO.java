@@ -1,5 +1,6 @@
 package app.dao;
 
+import app.entities.Actor;
 import app.entities.Crew;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -21,15 +22,26 @@ public class CrewDAO implements IDAO<Crew> {
     @Override
     public Crew create(Crew crew) {
         try (EntityManager em = emf.createEntityManager()) {
-            Crew crewInDatabase = em.find(Crew.class, crew.getCrewId());
-            if (crewInDatabase != null) {
+            if (!getCrewInformationBoolean(crew.getCrewId())) {
                 System.out.println("Crew already exists with id: " + crew.getCrewId());
+                em.close();
                 return crew;
             }
             em.getTransaction().begin();
             em.persist(crew);
             em.getTransaction().commit();
             return crew;
+        }
+    }
+
+    private boolean getCrewInformationBoolean(long crewId) {
+        em = emf.createEntityManager();
+        try {
+            TypedQuery<Crew> query = em.createQuery("SELECT c FROM Crew c WHERE c.crewId = :id", Crew.class);
+            query.setParameter("id", crewId);
+            return query.getResultList().isEmpty();
+        } finally {
+            em.close();
         }
     }
 

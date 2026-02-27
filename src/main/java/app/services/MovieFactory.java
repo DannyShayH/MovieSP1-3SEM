@@ -61,9 +61,11 @@ public class MovieFactory {
             movie.setOverview(movieDTO.getOverview());
             movie.setReleaseDate(movieDTO.getReleaseDate());
             movie.setMovieId(movieDTO.getId());
+
             for (long id : movieDTO.getGenres()) {
                 movie.addGenre(GenreAPIFactory.getGenreApiService().getGenreById(id));
             }
+
             ProductionDTO totalCast = MovieService.getProductionTeam(String.valueOf(movieDTO.getId()));
             PersonFactory.addPeopleToList(totalCast);
             ActorDAO actorDAO = new ActorDAO(EntityManagerFactoryService.getEntityManagerFactory());

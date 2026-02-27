@@ -32,7 +32,6 @@ public class ActorDAO implements IDAO<Actor> {
             em.getTransaction().begin();
             em.persist(actor);
             em.getTransaction().commit();
-
             return actor;
         }
     }

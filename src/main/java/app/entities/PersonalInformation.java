@@ -58,7 +58,7 @@ public class PersonalInformation {
     @OneToOne(cascade = CascadeType.MERGE)
     private Actor actor;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private Crew crew;
 
 

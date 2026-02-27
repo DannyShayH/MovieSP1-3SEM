@@ -16,10 +16,10 @@ public class Crew {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "crew_id")
+    @Column(name = "crew_id", unique = true)
     private long crewId;
 
-    @OneToOne(mappedBy = "crew", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "crew", cascade = CascadeType.MERGE, orphanRemoval = true)
     private PersonalInformation personalInformation;
 
 }

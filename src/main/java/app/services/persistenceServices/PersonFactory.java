@@ -1,24 +1,17 @@
-package app.services;
+package app.services.persistenceServices;
 
-import app.dao.PersonalInfoDAO;
-import app.dto.*;
+import app.dto.PersonDTO;
 import app.entities.Actor;
 import app.entities.Crew;
 import app.entities.PersonalInformation;
-import app.dto.ProductionDTO;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import app.services.ApiServices.PersonService;
 
 public class PersonFactory {
 
 
+    public static PersonalInformation setAnActorsPersonalInformation(Actor actor)
+    {
 
-
-
-    public static PersonalInformation setAnActorsPersonalInformation(Actor actor){
      PersonalInformation personalInformation = new PersonalInformation();
 
             PersonDTO personDTO = PersonService.getPerson(String.valueOf(actor.getActorId()));
@@ -38,7 +31,10 @@ public class PersonFactory {
 
       return personalInformation;
     }
-    public static PersonalInformation setACrewsPersonalInformation(Crew crew){
+
+    public static PersonalInformation setACrewsPersonalInformation(Crew crew)
+    {
+
      PersonalInformation personalInformation = new PersonalInformation();
 
             PersonDTO personDTO = PersonService.getPerson(String.valueOf(crew.getCrewId()));

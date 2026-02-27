@@ -1,4 +1,4 @@
-package app.services;
+package app.services.persistenceServices;
 
 import app.dao.ActorDAO;
 import app.dao.CrewDAO;
@@ -11,6 +11,8 @@ import app.entities.Crew;
 import app.entities.Movie;
 import app.entities.MovieActor;
 import app.entities.MovieCrew;
+import app.services.ApiServices.GenreAPIFactory;
+import app.services.ApiServices.MovieService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,12 @@ import java.util.List;
 public class MovieFactory {
 
 
-    public static List<Movie> createMovies(List<MovieDTO> movies) {
+    public static List<Movie> createMovies(List<MovieDTO> movies)
+    {
         List<Movie> movieList = new ArrayList<>();
 
-        for (MovieDTO movieDTO : movies) {
+        for (MovieDTO movieDTO : movies)
+        {
             Movie movie = new Movie();
 
             movie.setTitle(movieDTO.getTitle());
@@ -31,20 +35,25 @@ public class MovieFactory {
             movie.setMovieId(movieDTO.getId());
             movie.setPopularity(movieDTO.getPopularity());
 
-            for (long id : movieDTO.getGenres()) {
+            for (long id : movieDTO.getGenres())
+            {
                 movie.addGenre(GenreAPIFactory.getGenreApiService().getGenreById(id));
             }
 
-            ProductionDTO totalCast = MovieService.getProductionTeam(String.valueOf(movieDTO.getId()));
+            MovieService movieService = new MovieService();
+
+            ProductionDTO totalCast = movieService.getProductionTeam(String.valueOf(movieDTO.getId()));
 
             ActorDAO actorDAO = new ActorDAO(EntityManagerFactoryService.getEntityManagerFactory());
             CrewDAO crewDAO = new CrewDAO(EntityManagerFactoryService.getEntityManagerFactory());
             List<ActorInMovieDTO> cast = totalCast.getCast();
             List<CrewInMovieDTO> crew = totalCast.getCrew();
 
-            for (ActorInMovieDTO actorDTO : cast) {
+            for (ActorInMovieDTO actorDTO : cast)
+            {
                 Actor actor = actorDAO.findByActorId(actorDTO.getId());
-                if (actor == null) {
+                if (actor == null)
+                {
                     Actor newActor = new Actor();
                     newActor.setActorId(actorDTO.getId());
                     newActor.setPersonalInformation(
@@ -60,9 +69,11 @@ public class MovieFactory {
                 movie.addCastMember(movieActor);
             }
 
-            for (CrewInMovieDTO crewDTO : crew) {
+            for (CrewInMovieDTO crewDTO : crew)
+            {
                 Crew crewMember = crewDAO.findByCrewId(crewDTO.getId());
-                if (crewMember == null) {
+                if (crewMember == null)
+                {
                     Crew newCrew = new Crew();
                     newCrew.setCrewId(crewDTO.getId());
                     newCrew.setPersonalInformation(

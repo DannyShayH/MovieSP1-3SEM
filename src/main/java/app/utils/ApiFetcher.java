@@ -10,19 +10,22 @@ import java.net.http.HttpResponse;
 
 public class ApiFetcher {
 
-    public static JsonNode getApiDataWithMapper(String url, ObjectMapper objectMapper){
+    public static JsonNode getApiDataWithMapper(String url, ObjectMapper objectMapper)
+    {
 
         try {
             Thread.sleep(25);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e)
+        {
             throw new RuntimeException(e);
         }
         try {
             JsonNode node = objectMapper.readTree(new URI(url).toURL());
-//            System.out.println(node.toPrettyString());
+
             return node;
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             throw new RuntimeException(e);
         }
 
@@ -30,7 +33,8 @@ public class ApiFetcher {
     }
 
 
-    public  static String getApiData(String url) {
+    public  static String getApiData(String url)
+    {
         HttpClient client = HttpClient.newHttpClient();
         String result = null;
 
@@ -45,7 +49,8 @@ public class ApiFetcher {
 
 
 
-            if(response.statusCode() == 200) {
+            if(response.statusCode() == 200)
+            {
 
                 String bodytext = response.body();
                 System.out.println(bodytext);
@@ -53,11 +58,10 @@ public class ApiFetcher {
                 result = bodytext;
 
             }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             throw new RuntimeException(e);
         }
         return result;
     }
-
-
 }

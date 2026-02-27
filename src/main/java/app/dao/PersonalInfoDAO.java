@@ -1,8 +1,7 @@
 package app.dao;
 
-import app.entities.Actor;
 import app.entities.PersonalInformation;
-import app.services.EntityManagerFactoryService;
+import app.services.persistenceServices.EntityManagerFactoryService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;

@@ -2,7 +2,6 @@ package app.dao;
 
 import app.entities.Actor;
 import app.entities.PersonalInformation;
-import app.services.EntityManagerFactoryService;
 import jakarta.persistence.*;
 
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package app.services;
+package app.services.ApiServices;
 
 import app.dto.GenreDTO;
 import app.entities.Genre;
@@ -25,29 +25,35 @@ public class GenreApiService {
         JsonNode response = ApiFetcher.getApiDataWithMapper(url, objectMapper);
         try {
             return objectMapper.treeToValue(response.get("genres"), GenreDTO[].class);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e)
+        {
             throw new RuntimeException(e);
         }
     }
 
 
-    public static Set<Genre> getAllGenres(){
+    public static Set<Genre> getAllGenres()
+    {
         Set<Genre> genres = new HashSet<>();
-        for(GenreDTO genreDTO : getGenre()){
+        for(GenreDTO genreDTO : getGenre())
+        {
             long id = genreDTO.getId();
-            if(genres.stream().anyMatch(genre -> genre.getId() != id)){
-
+            if(genres.stream().anyMatch(genre -> genre.getId() != id))
+            {
                 genres.add(new Genre(genreDTO.getId(),genreDTO.getName()));
             }
         }
             return genres;
     }
 
-    public Genre getGenreById(long id){
+    public Genre getGenreById(long id)
+    {
 
         Genre genre = null;
-        for(GenreDTO genreDTO : getGenre()){
-            if(genreDTO.getId() == id){
+        for(GenreDTO genreDTO : getGenre())
+        {
+            if(genreDTO.getId() == id)
+            {
                 genre = new Genre(genreDTO.getId(),genreDTO.getName());
             }
         }

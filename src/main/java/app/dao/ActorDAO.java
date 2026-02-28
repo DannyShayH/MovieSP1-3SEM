@@ -67,55 +67,7 @@ public class ActorDAO implements IDAO<Actor> {
             }
         }
     }
-//    @Override
-//    public Actor create(Actor actor) {
-//        try (EntityManager em = emf.createEntityManager()) {
-//            if (!getActorInformationBoolean(actor.getActorId())) { //if(personalInformationInDB == false personalInformationInDB != null)
-//                System.out.println("creating the same entity again:");
-//                return actor;
-//            }
-//
-//            em.getTransaction().begin();
-//            PersonalInformation pi = actor.getPersonalInformation();
-//            if (pi != null) {
-//                PersonalInformation existing = em.find(PersonalInformation.class, pi.getPersonId());
-//                if(existing == null){
-//                    em.persist(pi);
-//                }else{
-//                    actor.setPersonalInformation(existing);
-//                }
-//            }
-//            em.persist(actor);
-//            em.getTransaction().commit();
-//            return actor;
-//        }
-//    }
 
-//    @Override
-//    public Actor create(Actor actor){
-//        try(EntityManager em = emf.createEntityManager()){
-//            em.getTransaction().begin();
-//            PersonalInformation pi = actor.getPersonalInformation();
-////
-//                if(actorExists(em, pi.getActor().getActorId())){
-//                    actor.setPersonalInformation(pi);
-//                    em.persist(actor);
-//                    em.merge(pi);
-//                    em.getTransaction().commit();
-//                    return actor;
-//                }
-//            }
-//            return actor;
-//        }
-////    }
-
-    private boolean actorExists(EntityManager em, long actorId) {
-        Long count = em.createQuery(
-                        "SELECT COUNT(a) FROM Actor a WHERE a.actorId = :id", Long.class)
-                .setParameter("id", actorId)
-                .getSingleResult();
-        return count > 0;
-    }
 
     private PersonalInformation upsertPersonalInformation(EntityManager em, PersonalInformation incoming) {
         if (incoming == null) return null;

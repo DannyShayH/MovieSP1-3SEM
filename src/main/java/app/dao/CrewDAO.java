@@ -63,26 +63,6 @@ public class CrewDAO implements IDAO<Crew> {
             }
         }
     }
-//    @Override
-//    public Crew create(Crew crew) {
-//        try (EntityManager em = emf.createEntityManager()) {
-//            em.getTransaction().begin();
-//            PersonalInformation pi = crew.getPersonalInformation();
-//
-//
-//            if (getCrewInformationBoolean(pi.getCrew().getCrewId())) {
-//                crew.setPersonalInformation(pi);
-//                em.persist(crew);
-//                em.merge(pi);
-//                em.getTransaction().commit();
-//                return crew;
-//            }
-//        }
-//
-//        return crew;
-//
-//        }
-
 
 
 

@@ -51,14 +51,7 @@ public class PersonalInformation {
 
     @Column(name = "popularity")
     private double popularity;
-/*
-    @OneToOne(cascade = CascadeType.MERGE)
-    private Actor actor;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    private Crew crew;
-
-*/
     @OneToOne(mappedBy = "personalInformation")
     private Actor actor;
 

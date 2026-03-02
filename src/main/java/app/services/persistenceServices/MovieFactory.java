@@ -19,7 +19,6 @@ import java.util.List;
 
 public class MovieFactory {
 
-
     public static List<Movie> createMovies(List<MovieDTO> movies)
     {
         List<Movie> movieList = new ArrayList<>();
@@ -89,13 +88,8 @@ public class MovieFactory {
                 movieCrew.setDepartment(crewDTO.getDepartment());
                 movie.addCrewMember(movieCrew);
             }
-
                 movieList.add(movie);
-
-
         }
         return movieList;
     }
-
 }
-//

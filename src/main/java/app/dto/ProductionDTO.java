@@ -16,6 +16,4 @@ public class ProductionDTO  {
 
     @JsonProperty("crew")
     private List<CrewInMovieDTO> crew;
-
-
 }

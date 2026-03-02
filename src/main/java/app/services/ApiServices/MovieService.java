@@ -23,7 +23,6 @@ public class MovieService {
     private static String apiKey = System.getenv("API_KEY");
     private static String productionUrl = "https://api.themoviedb.org/3/movie/€1/credits?language=en-US&api_key=€2";
 
-
     public List<MovieDTO> getDanishMovies()
     {
         List<MovieDTO> movies = new ArrayList<>();

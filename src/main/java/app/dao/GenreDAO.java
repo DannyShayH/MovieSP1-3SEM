@@ -12,7 +12,6 @@ import java.util.Set;
 public class GenreDAO implements IDAO<Genre> {
     private static EntityManagerFactory emf;
 
-
     @Override
     public Genre create(Genre genre) {
         try (EntityManager em = emf.createEntityManager()) {

@@ -1,10 +1,6 @@
 package app.dao;
 
-import app.entities.Actor;
-import app.entities.Crew;
 import app.entities.Movie;
-import app.entities.MovieActor;
-import app.entities.MovieCrew;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;

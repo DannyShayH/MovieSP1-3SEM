@@ -12,12 +12,9 @@ public class ActorDAO implements IDAO<Actor> {
     private static EntityManagerFactory emf;
     private EntityManager em;
 
-
     public ActorDAO(EntityManagerFactory emf) {
         this.emf = emf;
     }
-
-
 
     @Override
     public Actor create(Actor actor) {
@@ -29,7 +26,6 @@ public class ActorDAO implements IDAO<Actor> {
             try {
                 long actorId = actor.getActorId();
 
-                // Find existing actor by business key
                 List<Actor> found = em.createQuery(
                                 "SELECT a FROM Actor a LEFT JOIN FETCH a.personalInformation WHERE a.actorId = :id",
                                 Actor.class)
@@ -38,17 +34,13 @@ public class ActorDAO implements IDAO<Actor> {
                         .getResultList();
 
                 if (!found.isEmpty()) {
-                    // Update existing (preferred: update managed entity, not persist)
                     Actor managed = found.get(0);
 
                     PersonalInformation pi = upsertPersonalInformation(em, actor.getPersonalInformation());
                     managed.setPersonalInformation(pi);
                     if (pi != null) {
-                        pi.setActor(managed); // keep both sides in sync
+                        pi.setActor(managed);
                     }
-
-                    // update other Actor fields as needed here (but DO NOT change actorId if it's a business key)
-                    // managed.setX(actor.getX());
 
                     tx.commit();
                     return managed;
@@ -56,8 +48,8 @@ public class ActorDAO implements IDAO<Actor> {
                     // Create new
                     PersonalInformation pi = upsertPersonalInformation(em, actor.getPersonalInformation());
                     actor.setPersonalInformation(pi);
-                    if (pi != null) pi.setActor(actor); // sync both sides
-                    em.persist(actor);                  // cascades persist to PI
+                    if (pi != null) pi.setActor(actor);
+                    em.persist(actor);
                     tx.commit();
                     return actor;
                 }
@@ -67,7 +59,6 @@ public class ActorDAO implements IDAO<Actor> {
             }
         }
     }
-
 
     private PersonalInformation upsertPersonalInformation(EntityManager em, PersonalInformation incoming) {
         if (incoming == null) return null;
@@ -96,7 +87,6 @@ public class ActorDAO implements IDAO<Actor> {
         existing.setPopularity(incoming.getPopularity());
         return existing;
     }
-
 
     @Override
     public Actor getById(long id) {

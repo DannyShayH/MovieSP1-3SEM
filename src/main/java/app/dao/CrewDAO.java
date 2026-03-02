@@ -1,6 +1,5 @@
 package app.dao;
 
-import app.entities.Actor;
 import app.entities.Crew;
 import app.entities.PersonalInformation;
 import jakarta.persistence.*;
@@ -9,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 public class CrewDAO implements IDAO<Crew> {
     private static EntityManagerFactory emf;
     private EntityManager em;
@@ -17,8 +15,6 @@ public class CrewDAO implements IDAO<Crew> {
     public CrewDAO(EntityManagerFactory emf) {
         this.emf = emf;
     }
-
-
 
     @Override
     public Crew create(Crew crew) {
@@ -29,31 +25,26 @@ public class CrewDAO implements IDAO<Crew> {
             tx.begin();
 
             try {
-                long crewId = crew.getCrewId(); // use the business key on Crew
+                long crewId = crew.getCrewId();
 
                 Crew existing = findByCrewId(em, crewId);
 
                 if (existing != null) {
-                    // Update existing managed entity
                     PersonalInformation newPi = upsertPersonalInformation(em, crew.getPersonalInformation());
                     existing.setPersonalInformation(newPi);
 
                     if (newPi != null) {
-                        newPi.setCrew(existing); // keep both sides in sync (if PI has crew backref)
+                        newPi.setCrew(existing);
                     }
-
-                    // copy other updatable fields from crew -> existing here
-                    // existing.setName(crew.getName());
-
                     tx.commit();
                     return existing;
                 } else {
                     // Create new
                     PersonalInformation pi = upsertPersonalInformation(em, crew.getPersonalInformation());
                     crew.setPersonalInformation(pi);
-                    if (pi != null) pi.setCrew(crew); // sync both sides
+                    if (pi != null) pi.setCrew(crew);
 
-                    em.persist(crew); // cascades persist to PI if mapped that way
+                    em.persist(crew);
                     tx.commit();
                     return crew;
                 }
@@ -63,8 +54,6 @@ public class CrewDAO implements IDAO<Crew> {
             }
         }
     }
-
-
 
     private Crew findByCrewId(EntityManager em, long crewId) {
         List<Crew> result = em.createQuery(

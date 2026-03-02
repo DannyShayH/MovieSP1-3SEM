@@ -1,0 +1,147 @@
+@startuml
+!pragma layout smetana
+
+'https://plantuml.com/class-diagram
+
+
+package config{
+class EntityRegistry{
+- entityRegistry()
+- registerEntities(configuration): void
+}
+class HibernateBaseProperties{
+- HibernateBaseProperties()
+- createBase(): Properties
+}
+class HibernateConfig{
+- HibernateConfig()
+- buildProps(): Properties
+- getEntityManagerFactory(): EntityManagerFactory
+- setDeployedProperties(Properties): void
+- SetDevProperties(properties): void
++ emf: EntityManagerFactory
+}
+class HibernateEmfBuilder{
+- HibernateEmfBuilder()
+- build(Properties): EntityManagerFactory
+}
+}
+
+package dao{
+class ActorDAO{
+- ActorDAO(EntityManagerFactory)
+- create(actor): Actor
+}
+class CrewDAO{}
+interface IDAO{}
+class GenreDAO{}
+class MovieDAO{}
+class PersonalInfoDAO{}
+}
+
+package dto{
+class MovieDTO{}
+class GenreDTO{}
+class ActorInMovieDTO{}
+class CrewInMovieDTO{}
+class PersonDTO{}
+class ProductionDTO{}
+}
+
+package entities{
+class Actor
+class Genre
+class Movie
+class MovieActor
+class MovieCrew
+class Crew
+class PersonalInformation
+}
+package exceptions{
+exception ApiException
+}
+
+package services{
+package ApiServices{
+class GenreAPIFactory
+class GenreAPIService
+class MovieService
+class MovieSyncService
+class ObjectMapperService
+class PersonService
+}
+package persistenceServices {
+class EntityManagerFactory {
+- EntityManagerFactory emf
++ getEntityManagerFactory()
+}
+class MovieFactory{
++ createMovies()
+}
+class PersonFactory{
++ setACrewsPersonalInformation()
++ setAnActorsPersonalInformation()
+}
+}
+}
+
+package utils {
+class ApiFetcher{
++ getApiData()
++ getApiDataWithMapper()
+}
+class Utils {
++ getPropertyValue()
+}
+}
+
+class App{
++ MovieService.SyncFromTmdb()
++ MovieDAO
++ movieDAO.getAll()
++ movieDAO.getTop10LowestRated()
++ movieDAO.getTop10MostPopular()
++ movieDAO.getTop10HighestRated()
++ movieDAO.getMoviesByActorId()
++ movieDAO.getMoviesByDirectorId()
++ movieDAO.getAverageRating()
++ movieDAO.updateTitleAndReleaseDate()
++ movieDAO.searchByTitle()
+}
+class Main {
++ App.Initiate()
+}
+
+Main --* App
+services --* dto
+dao --* services
+utils --* services
+entities -up-* dao
+
+'DTOS'
+MovieDTO --* ActorInMovieDTO
+ActorInMovieDTO --* PersonDTO
+MovieDTO --* CrewInMovieDTO
+CrewInMovieDTO --* PersonDTO
+ProductionDTO --* ActorInMovieDTO
+ProductionDTO --* CrewInMovieDTO
+
+'APISERVICES'
+MovieService *-- MovieSyncService
+
+'DAOS'
+ActorDAO --|> IDAO
+GenreDAO --|> IDAO
+MovieDAO --|> IDAO
+PersonalInfoDAO --|> IDAO
+CrewDAO --|> IDAO
+
+'Entities'
+Movie --* MovieActor
+Actor --* MovieActor
+PersonalInformation --|> Actor
+PersonalInformation --|> Crew
+Crew --* MovieCrew
+Movie --* MovieCrew
+Genre *--* Movie
+@enduml

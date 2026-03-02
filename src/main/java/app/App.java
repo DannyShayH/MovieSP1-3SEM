@@ -5,13 +5,10 @@ import app.dao.MovieDAO;
 import app.services.ApiServices.MovieSyncService;
 import app.services.persistenceServices.EntityManagerFactoryService;
 
-
 public class App {
     public static void initiate()
     {
-
-
-//        MovieSyncService.syncFromTmdb();
+        MovieSyncService.syncFromTmdb();
 
         MovieDAO movieDAO = new MovieDAO(EntityManagerFactoryService.getEntityManagerFactory());
         movieDAO.getAll().forEach(System.out::println);
@@ -24,9 +21,5 @@ public class App {
         movieDAO.getAverageRating();
         movieDAO.updateTitleAndReleaseDate(778819,"Ninjaen der er ternet","2021-09-16");
         movieDAO.searchByTitle("Ninjaen ").forEach(System.out::println);
-
-
     }
-
-
 }

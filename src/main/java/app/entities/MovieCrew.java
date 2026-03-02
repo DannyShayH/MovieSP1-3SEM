@@ -24,7 +24,6 @@ public class MovieCrew {
     @Column(length = 10000)
     private String department;
 
-
     @ManyToOne
     private Movie movie;
 

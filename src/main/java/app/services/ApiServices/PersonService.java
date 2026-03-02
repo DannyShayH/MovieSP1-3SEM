@@ -12,7 +12,6 @@ public class PersonService
     static String apiKey = System.getenv("API_KEY");
     static String allActorsUrl = "https://api.themoviedb.org/3/person/€1?language=en-US&api_key=€2";
 
-
     public static PersonDTO getPerson(String actorId)
     {
         String url =  allActorsUrl;
@@ -26,5 +25,4 @@ public class PersonService
             throw new RuntimeException(e);
         }
     }
-
 }

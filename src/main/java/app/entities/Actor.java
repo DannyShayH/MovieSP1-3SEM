@@ -19,13 +19,6 @@ public class Actor {
     @Column(name = "actor_id", unique = true)
     private long actorId;
 
-//    @OneToOne(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private PersonalInformation personalInformation;
-
-
-
-
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personal_id", unique = true)
     private PersonalInformation personalInformation;

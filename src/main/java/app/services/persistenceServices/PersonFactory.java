@@ -8,7 +8,6 @@ import app.services.ApiServices.PersonService;
 
 public class PersonFactory {
 
-
     public static PersonalInformation setAnActorsPersonalInformation(Actor actor)
     {
 
@@ -26,8 +25,6 @@ public class PersonFactory {
             personalInformation.setBirthPlace(personDTO.getPlaceOfBirth());
             personalInformation.setKnownForDepartment(personDTO.getDepartment());
             personalInformation.setActor(actor);
-
-
 
       return personalInformation;
     }
@@ -50,10 +47,6 @@ public class PersonFactory {
             personalInformation.setKnownForDepartment(personDTO.getDepartment());
             personalInformation.setCrew(crew);
 
-
-
       return personalInformation;
     }
-
-
 }

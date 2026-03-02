@@ -22,21 +22,6 @@ public class Crew {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personal_id", unique = true)
     private PersonalInformation personalInformation;
-/*
-
-
-    //@OneToOne(mappedBy = "crew", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
-    //private PersonalInformation personalInformation;
-*/
-
-
-
-
-
-
-
-
-
 }
 
 

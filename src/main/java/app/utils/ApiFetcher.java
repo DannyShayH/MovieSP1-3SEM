@@ -28,10 +28,7 @@ public class ApiFetcher {
         {
             throw new RuntimeException(e);
         }
-
-
     }
-
 
     public  static String getApiData(String url)
     {
@@ -46,8 +43,6 @@ public class ApiFetcher {
                     .GET()
                     .build();
             HttpResponse<String> response =  client.send(request, HttpResponse.BodyHandlers.ofString());
-
-
 
             if(response.statusCode() == 200)
             {

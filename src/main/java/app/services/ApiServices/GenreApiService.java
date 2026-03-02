@@ -31,7 +31,6 @@ public class GenreApiService {
         }
     }
 
-
     public static Set<Genre> getAllGenres()
     {
         Set<Genre> genres = new HashSet<>();

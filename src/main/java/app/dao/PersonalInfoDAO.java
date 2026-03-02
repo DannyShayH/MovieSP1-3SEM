@@ -15,11 +15,9 @@ public class PersonalInfoDAO implements IDAO<PersonalInformation> {
     private EntityManagerFactory emf;
     EntityManager em;
 
-
     public PersonalInfoDAO() {
         this.emf = EntityManagerFactoryService.getEntityManagerFactory();
     }
-
 
     @Override
     public PersonalInformation create(PersonalInformation pi) {
@@ -34,21 +32,17 @@ public class PersonalInfoDAO implements IDAO<PersonalInformation> {
                     ).setParameter("personId", pi.getPersonId())
                     .setMaxResults(1)
                     .getResultList();
-
             if (!results.isEmpty()) {
                 PersonalInformation existing = results.get(0);
                 pi.setId(existing.getId());
-                pi = em.merge(pi);   // update existing row
+                pi = em.merge(pi);
             } else {
-                em.persist(pi);      // insert new row
+                em.persist(pi);
             }
-
             em.getTransaction().commit();
             return pi;
         }
     }
-
-
 
     @Override
     public PersonalInformation getById(long id) {

@@ -1,0 +1,101 @@
+@startuml
+!pragma layout smetana
+
+'https://plantuml.com/class-diagram
+
+
+package config{
+class EntityRegistry
+class HibernateBaseProperties
+class HibernateConfig
+class HibernateEmfBuilder
+}
+
+package dao{
+class ActorDAO
+class CrewDAO
+interface IDAO
+class GenreDAO
+class MovieDAO
+class PersonalInfoDAO
+}
+
+package dto{
+class MovieDTO
+class GenreDTO
+class ActorInMovieDTO
+class CrewInMovieDTO
+class PersonDTO
+class ProductionDTO
+}
+
+package entities{
+class Actor
+class Genre
+class Movie
+class MovieActor
+class MovieCrew
+class Crew
+class PersonalInformation
+}
+package exceptions{
+exception ApiException
+}
+
+package services{
+package ApiServices{
+class GenreAPIFactory
+class GenreAPIService
+class MovieService
+class MovieSyncService
+class ObjectMapperService
+class PersonService
+}
+package persistenceServices {
+class EntityManagerFactory
+class MovieFactory
+class PersonFactory
+}
+}
+
+package utils {
+class ApiFetcher
+class Utils
+}
+
+class App
+class Main
+
+Main --* App
+services --* dto
+dao --* services
+utils --* services
+entities -up-* dao
+
+'DTOS'
+MovieDTO --* ActorInMovieDTO
+ActorInMovieDTO --* PersonDTO
+MovieDTO --* CrewInMovieDTO
+CrewInMovieDTO --* PersonDTO
+ProductionDTO --* ActorInMovieDTO
+ProductionDTO --* CrewInMovieDTO
+
+'APISERVICES'
+MovieService *-- MovieSyncService
+
+'DAOS'
+ActorDAO --|> IDAO
+GenreDAO --|> IDAO
+MovieDAO --|> IDAO
+PersonalInfoDAO --|> IDAO
+CrewDAO --|> IDAO
+
+'Entities'
+Movie --* MovieActor
+Actor --* MovieActor
+PersonalInformation --|> Actor
+PersonalInformation --|> Crew
+Crew --* MovieCrew
+Movie --* MovieCrew
+Genre *--* Movie
+@enduml

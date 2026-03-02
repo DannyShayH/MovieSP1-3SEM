@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -48,7 +47,6 @@ public class Movie {
     @Builder.Default
     private Set<Genre> genres = new HashSet<>();
 
-
     @Override
     public String toString() {
         return "Title: " + title + "\n +" +
@@ -67,7 +65,6 @@ public class Movie {
             }
              genres.add(genre);
                 genre.addToMovieList(this);
-
         }
     }
 
